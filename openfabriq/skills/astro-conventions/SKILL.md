@@ -20,7 +20,7 @@ Every agent of the migration reads this skill. Keep it short and prescriptive.
 - No JavaScript in the browser by default. A component that needs it is an island (`client:visible`, or `client:idle`), for a reason written in the pull request.
 - Breakpoints: the same widths as the Framer site, read in `migration/inventory.md`, as CSS media queries.
 - Images go through `astro:assets` (`<Image />`), stored with the content, with their alternative text from the export. No URL of Framer's CDN in the new site.
-- Until the switch, editors write in Framer and `migration:sync` brings the content back: an entry is never edited by hand. After the switch, editing in the browser (Keystatic) only if a decision in `migration/decisions/` says so; otherwise the content stays Markdown in the repository.
-- Forms post where the decisions in `migration/decisions/` say; never to Framer.
+- Until the switch, editors write in Framer and `migration:sync` brings the content back: an entry is never edited by hand. After the switch, editing in the browser (Keystatic) only if `migration/decisions.md` says so; otherwise the content stays Markdown in the repository.
+- Forms post where `migration/decisions.md` says; never to Framer.
 - `migration/parity/T<nn>.json`, one file per ticket, lists the pairs of URLs `pnpm parity` compares; a ticket writes its own file and never touches another's, so two pull requests never conflict on it.
 - Commits: imperative subject line that references the ticket.

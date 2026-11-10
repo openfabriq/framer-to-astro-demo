@@ -31,7 +31,7 @@ Read these on the published site, with `curl -fsS $LEGACY_SITE_URL/<path>`, or a
 - **Breakpoints**: a Framer page has a layout per breakpoint (desktop, tablet, phone by default). Read the page at each width the site has.
 - **Interactions and effects**: appear, scroll, hover and page transitions, done by Framer's runtime. The new site keeps none of it: say what each one does for a visitor, so it is rebuilt in CSS or a small island.
 - **Code components and overrides**: React code that lives in the Framer project and runs only inside Framer. Say what each one does on the page, and where; it is rebuilt, never copied.
-- **Forms**: Framer handles their submissions. Note each form's fields and where its messages go (email, a webhook, a tool): that is a decision for humans.
+- **Forms**: Framer handles their submissions. Note each form's fields and where its messages go (email, a webhook, a tool): the plan decides where they go after the switch.
 - **Redirects**: set in Framer's site settings, with no export. Ask a maintainer, in a comment, to copy them into `migration/redirects.csv` (`from,to`, one line each).
 - **Other locales**: each locale is a subfolder of the published site (`/fr/…`). Read them on the pages, and say that their CMS content needs its own ticket and its own export.
 - **Custom code**: `<script>` and `<style>` in the head or the body (analytics, chat, cookie consent), from the site settings or embeds. List each one.
