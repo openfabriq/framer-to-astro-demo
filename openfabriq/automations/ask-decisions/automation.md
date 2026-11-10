@@ -3,7 +3,7 @@ when:
   issue.labeled: { labels: ["migration:decide"] }
 agent: planner
 can:
-  - create_issue: ["migration:decision"]
+  - create_issue: ["migration:decision", needs-human]
   - add_comment
   - remove_labels: ["migration:decide"]
 ---
