@@ -16,6 +16,7 @@ commands:
 checks: [build, test] # parity reads the published Framer site: agents run it themselves
 
 env:
+  ASTRO_TELEMETRY_DISABLED: "1" # Astro keeps its telemetry setting in ~/.config, which the sandbox of the commands cannot write on Linux
   LEGACY_SITE_URL: https://conversion.framer.media # the published Framer site: its framer.website address, or the real domain if that one redirects there
 # No secret: Framer's API key can edit and publish the site, so the factory never holds one.
 
