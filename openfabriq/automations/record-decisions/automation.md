@@ -1,15 +1,13 @@
 ---
 when:
-  issue.commented: { mentions: "@openfabriq" }
+  issue.commented: { labels: ["migration:decision"] }
 agent: planner
 can:
   - create_pull_request
   - create_issue: ["migration:decision"]
   - add_comment
 ---
-A maintainer addressed the factory in a comment. If this issue is not a decision issue (labeled `migration:decision`), change no file and open nothing: say in a comment that each decision is answered on its own issue.
-
-Otherwise read this issue: its question, its options, and the maintainers' answers. If the comment does not settle the question (it asks something, discusses, or cannot be read without guessing), record nothing: answer it in a comment.
+A maintainer commented on this decision issue, with or without `@openfabriq`. Read this issue: its question, its options, and the maintainers' answers. If the comment does not settle the question (it asks something, discusses, or cannot be read without guessing), record nothing: answer it in a comment.
 
 When it settles the question, write its decision in `migration/decisions/`, commit that file alone, and open a pull request that says `Closes #` and this issue's number: the parity review merges it without a person, and GitHub closes this issue then. A later answer to the same question rewrites the same file.
 
