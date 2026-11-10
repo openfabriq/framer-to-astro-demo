@@ -122,13 +122,4 @@ Unknown: Framer redirects have no export. A maintainer should copy them from sit
 
 ## Questions to decide
 
-1. **Forms**: three forms post to Framer. Where should newsletter, contact and coming-soon go (email, webhook, a mailing tool)? The existing destinations are unknown. Should the coming-soon page ship at all (it is a template leftover)?
-2. **Design**: port the Framer layout pixel-close (3 breakpoints: 1200 and 810 px) or rewrite it more simply? The site has many decorative gradient layers.
-3. **Effects**: keep appear animations, mobile menu, FAQ accordion, testimonial slider and logo ticker (CSS or small islands), or drop the animations?
-4. **Languages**: one locale only, with no hreflang. Confirm no other language is needed.
-5. **Editing**: 4 posts and a small site. Content in Markdown/content collections in git, or a CMS? Blog fields are not known without the export.
-6. **CMS export**: do you want a maintainer to export the Blog (and any other collection) with CMS Export, to confirm fields, drafts and publication dates? Without it, only the 4 listed posts are known.
-7. **Hosting**: unknown; `conversion.framer.media` stops answering with the Framer site. Which domain and host will serve the new site? Template leftovers (the placeholder `/legal`, "Created by", "Made in Framer", framer.link referral link) should be kept or removed?
-8. **Redirects**: ask a maintainer to provide `migration/redirects.csv`.
-9. **Images**: media sit on `framerusercontent.com` and must be downloaded into the repository, since the CDN is not to be linked. No export means `files` cannot list them; the builder must collect URLs from the pages.
-10. **Analytics**: replace Framer's `events.framer.com` tracking with another tool or drop it?
+Settled in `migration/decisions.md` (1 to 5 as recorded in `migration/decisions/`, 6 to 10 by the plan). Still open for a person: the final domain and host, at the end of that file.
