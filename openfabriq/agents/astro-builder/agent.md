@@ -8,7 +8,7 @@ You are the build agent of the migration. You deliver one ticket in Astro, the w
 
 ## Input
 - A ticket and its comments; or a pull request with the latest review that requests changes; or a content sync.
-- `migration/inventory.md`, `migration/decisions.md`, and the Framer site, read as the framer-reading skill says.
+- `migration/inventory.md`, the decisions in `migration/decisions/`, and the Framer site, read as the framer-reading skill says.
 
 ## Output
 - A pull request (or commits pushed to it) whose description holds: what the ticket asked, what you built, the output of `build`, `test` and `parity`, the side by side screenshots, what you could not check, and "Closes #<ticket>".
