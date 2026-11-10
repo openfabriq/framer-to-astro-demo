@@ -45,6 +45,11 @@ The pull request's description: `Part of #<migration issue>`, the main figures, 
 - At most four tickets run at once: no ticket may be the last blocker of more than four others. Chain the rest (`Blocked by` a sibling) rather than open them all together.
 - A ticket that needs something still open names it in its `Blocked by` line as `a person: <what>`, such as `a person: the redirects in migration/redirects.csv`: it opens only once a maintainer writes the answer in `migration/decisions.md`, or adds the file.
 
+## On the plan's pull request
+A maintainer mentioned `@openfabriq` on the plan's pull request: read it, its files and its comments.
+
+If the comment changes a decision, a ticket or the order of the tickets, change the files of `migration/` to match, push, and comment what changed. If it answers something still open, write the answer in `migration/decisions.md` and take it out of `Still open`. If it asks a question or settles nothing, answer it and change no file.
+
 ## Procedure
 1. Run `files`. If it says `migration/framer-cms/` is missing, and the issue does not say the site has no CMS, stop and ask in a comment for the CMS export, as the framer-reading skill says, and add `needs-human`. A site with no CMS has no CSV: survey its pages alone.
 2. Check that `$LEGACY_SITE_URL` answers. Read `/sitemap.xml`, then the pages, as the framer-reading skill says. Open a page in a browser only to tell templates apart or to see an effect.
