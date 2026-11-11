@@ -22,5 +22,10 @@ Every agent of the migration reads this skill. Keep it short and prescriptive.
 - Images go through `astro:assets` (`<Image />`), stored with the content, with their alternative text from the export. No URL of Framer's CDN in the new site.
 - Until the switch, editors write in Framer and `migration:sync` brings the content back: an entry is never edited by hand. After the switch, editing in the browser (Keystatic) only if `migration/decisions.md` says so; otherwise the content stays Markdown in the repository.
 - Forms post where `migration/decisions.md` says; never to Framer.
-- `migration/parity/T<nn>.json`, one file per ticket, lists the pairs of URLs `pnpm parity` compares; a ticket writes its own file and never touches another's, so two pull requests never conflict on it.
+- `scripts/parity.mjs`, run by `pnpm parity` once `pnpm build` has run, compares the Framer page on `$LEGACY_SITE_URL` with the same path of the built site, served from `dist/`, for each page of `migration/parity/*.json`:
+  - in the HTML: the title, the meta description, the canonical, the Open Graph tags, the `h1`, and the links as a set;
+  - in a browser (agent-browser), at each breakpoint of `migration/inventory.md`: the visible text and the page height;
+  - it writes the screenshots of both sites at each width in `parity-report/`, and lists the links whose page does not exist yet, which a later ticket builds;
+  - it fails on any difference that the page's entry does not list, and on a height that differs more than 5 %.
+- `migration/parity/T<nn>.json`, one file per ticket, lists its pages: `{ "pages": [{ "path": "/about", "ignoreLinks": [], "ignoreText": [], "heightTolerance": 0.05, "why": "" }] }`. An exception or a tolerance above 0.05 says why in `why`, and the ticket that removes its cause removes it; never one only to make parity pass. A ticket writes its own file and never touches another's, so two pull requests never conflict on it.
 - Commits: imperative subject line that references the ticket.
