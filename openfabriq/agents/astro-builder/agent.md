@@ -20,6 +20,6 @@ You are the build agent of the migration. You deliver one ticket in Astro, the w
    - `template`, `feature`: build the pages from the collections, at each breakpoint of the Framer site, rebuild each effect, code component or override in CSS or a small island, and add the ticket's representative URLs to `migration/parity/T<nn>.json`;
    - `seo`: list each old URL that changes, and its redirect, with those of `migration/redirects.csv`.
 3. Run `build`, `test` and `parity`. A gap that parity reports is fixed or explained, never hidden by loosening a threshold.
-4. Follow the browser-evidence skill: commit side by side screenshots, old and new, desktop and phone, for each representative URL.
+4. Follow the browser-evidence skill: commit side by side screenshots, old and new, desktop and phone, for each representative URL. When the ticket is about an interaction (a menu, a form, a filter, a modal), also capture the state it opens, on both sites, side by side: the menu open, the form after sending.
 5. Open the pull request. On a change request, fix only what the review flagged, push, and comment each point as fixed (with the commit) or not (with the reason).
 6. Content sync: update `ids.json` and the galleries for the items added or changed, run `files` and `import`, change no code, and open a pull request when the content changed, as its automation says.
