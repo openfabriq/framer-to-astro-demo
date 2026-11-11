@@ -1,0 +1,94 @@
+---
+import Base from '../layouts/Base.astro';
+
+// Placeholder privacy policy of the template, copy unchanged (decision 7): the owner writes the real one.
+const paragraphs = [
+	'This is where you can write your privacy policy or terms and conditions.',
+	'Example: ',
+	'At [Your Company Name], we are committed to protecting your privacy. This policy outlines how we collect, use, and safeguard your personal information.',
+	'Information We Collect',
+	'We may collect personal details like your name, email address, phone number, and browsing data when you interact with our website.',
+	'How We Use Your Information',
+	'We use this information to:',
+	'• Provide services and customer support',
+	'• Improve your user experience',
+	'• Send relevant updates or marketing materials (with your consent)',
+	'Data Security',
+	'We implement security measures to protect your information from unauthorized access.',
+	'Cookies',
+	'We use cookies to enhance your browsing experience and analyze site traffic.',
+	'Your Rights',
+	'You can opt-out of marketing communications or request to access, update, or delete your personal data at any time.',
+	'Contact Us',
+	'For questions about this policy, email us at [Your Contact Email].',
+];
+
+// Widths the old page gives some paragraphs (read at 1440 and 810px); the others run full width.
+// `at` is the width from 1200px, `tablet` the width from 810px.
+const widths: Record<string, { at?: number; tablet?: number }> = {
+	'At [Your': { at: 620, tablet: 620 },
+	'We may collect': { tablet: 620 },
+	'You can opt-out': { tablet: 480 },
+};
+const style = (p: string) => {
+	const key = Object.keys(widths).find((k) => p.startsWith(k));
+	const w = key && widths[key];
+	return w ? `--w-tablet: ${w.tablet ?? 'none'}${w.tablet ? 'px' : ''}; --w-wide: ${w.at ?? 'none'}${w.at ? 'px' : ''}` : undefined;
+};
+---
+
+<Base
+	title="Legal Page - Conversion"
+	description="This is where you can write your privacy policy or terms and conditions."
+	path="/legal"
+>
+	<article class="legal container">
+		<p class="title">Legal Page</p>
+		<div class="body">
+			{paragraphs.map((p) => <p style={style(p)}>{p}</p>)}
+		</div>
+	</article>
+</Base>
+
+<style>
+	.legal {
+		display: flex;
+		flex-direction: column;
+		gap: 20px;
+		padding-top: 32px;
+	}
+	.title {
+		font-size: 38px;
+		line-height: 41.8px;
+		letter-spacing: -0.04em;
+	}
+	.body {
+		display: flex;
+		flex-direction: column;
+		gap: 20px;
+		color: var(--muted);
+		font-size: 16px;
+		line-height: 24px;
+	}
+	@media (min-width: 810px) {
+		.body p {
+			max-width: var(--w-tablet, none);
+		}
+		.title {
+			font-size: 48px;
+			line-height: 52.8px;
+		}
+		.body {
+			font-size: 18px;
+			line-height: 27px;
+		}
+	}
+	@media (min-width: 1200px) {
+		.body p {
+			max-width: var(--w-wide, none);
+		}
+		.legal {
+			padding-top: 52px;
+		}
+	}
+</style>

@@ -1,5 +1,5 @@
 # T01 [foundation] Astro skeleton, layout, menus, import and parity scripts
-Status: open
+Status: done
 Blocked by: none
 
 Part of #1

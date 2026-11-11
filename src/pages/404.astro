@@ -1,0 +1,24 @@
+---
+import Base from '../layouts/Base.astro';
+---
+
+<Base title="Page Not Found - Conversion" description="This page could not be found." path="/404">
+	<article class="container nf">
+		<p class="title">Page not found</p>
+		<a class="button" href="/">Back to home</a>
+	</article>
+</Base>
+
+<style>
+	.nf {
+		display: flex;
+		flex-direction: column;
+		align-items: flex-start;
+		gap: 24px;
+		padding-top: 52px;
+	}
+	.title {
+		font-size: 48px;
+		letter-spacing: -0.04em;
+	}
+</style>

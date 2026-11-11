@@ -1,0 +1,230 @@
+---
+import Logo from './Logo.astro';
+
+// Decision 1: /coming-soon is dropped (T10 redirects it), so it is not linked.
+const pages = [
+	{ href: '/legal', label: 'Legal' },
+	{ href: '/404', label: '404' },
+];
+const main = [
+	{ href: '/about', label: 'About' },
+	{ href: '/blog', label: 'Blog' },
+	{ href: '/services', label: 'Services' },
+	{ href: '/#process', label: 'Process' },
+];
+const mobile = [
+	{ href: '/about', label: 'About Us' },
+	{ href: '/blog', label: 'Blog' },
+	{ href: '/services', label: 'Services' },
+	{ href: '/#process', label: 'Process' },
+	{ href: '/legal', label: 'Legal' },
+	{ href: '/404', label: '404' },
+];
+---
+
+<header class="nav" data-nav>
+	<nav class="bar" aria-label="Main">
+		<a class="logo" href="/" aria-label="Conversion, home"><Logo /></a>
+
+		<ul class="links">
+			{main.map((l) => <li><a class="link" href={l.href}>{l.label}</a></li>)}
+			<li class="dropdown">
+				<button class="link" type="button" aria-haspopup="true">
+					Pages
+					<svg width="16" height="16" viewBox="0 0 256 256" fill="currentColor" aria-hidden="true">
+						<path d="m213.66 101.66-80 80a8 8 0 0 1-11.32 0l-80-80a8 8 0 0 1 11.32-11.32L128 164.69l74.34-74.35a8 8 0 0 1 11.32 11.32Z"></path>
+					</svg>
+				</button>
+				<ul class="menu">
+					{pages.map((l) => <li><a class="link" href={l.href}>{l.label}</a></li>)}
+				</ul>
+			</li>
+			<li><a class="button book" href="/contact">Book a call</a></li>
+		</ul>
+
+		<button class="burger" type="button" aria-expanded="false" aria-controls="mobile-menu" aria-label="Menu">
+			<span></span><span></span><span></span>
+		</button>
+	</nav>
+
+	<div class="panel" id="mobile-menu">
+		<ul>
+			{mobile.map((l) => <li><a href={l.href}>{l.label}</a></li>)}
+		</ul>
+		<a class="button" href="/contact">Book a call</a>
+	</div>
+</header>
+
+<script>
+	// The hamburger menu of tablet and phone: opens and closes the panel.
+	const header = document.querySelector<HTMLElement>('[data-nav]');
+	const burger = header?.querySelector<HTMLButtonElement>('.burger');
+	const setOpen = (open: boolean) => {
+		if (!header || !burger) return;
+		header.toggleAttribute('data-open', open);
+		burger.setAttribute('aria-expanded', String(open));
+	};
+	burger?.addEventListener('click', () => setOpen(!header?.hasAttribute('data-open')));
+	header?.querySelectorAll('.panel a').forEach((a) => a.addEventListener('click', () => setOpen(false)));
+	document.addEventListener('keydown', (e) => e.key === 'Escape' && setOpen(false));
+</script>
+
+<style>
+	.nav {
+		position: sticky;
+		top: 0;
+		z-index: 10;
+		background: var(--bg);
+	}
+	.bar {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		padding: 16px 24px;
+	}
+	.logo {
+		display: flex;
+	}
+	ul {
+		list-style: none;
+		margin: 0;
+		padding: 0;
+	}
+	.links {
+		display: none;
+	}
+	.burger {
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		gap: 6px;
+		width: 28px;
+		height: 28px;
+		padding: 0;
+		border: 0;
+		background: none;
+		cursor: pointer;
+	}
+	.burger span {
+		display: block;
+		height: 2px;
+		background: var(--text);
+		transition: transform 0.2s, opacity 0.2s;
+	}
+	[data-open] .burger span:nth-child(1) {
+		transform: translateY(8px) rotate(45deg);
+	}
+	[data-open] .burger span:nth-child(2) {
+		opacity: 0;
+	}
+	[data-open] .burger span:nth-child(3) {
+		transform: translateY(-8px) rotate(-45deg);
+	}
+	.panel {
+		position: absolute;
+		top: 100%;
+		left: 0;
+		right: 0;
+		display: none;
+		flex-direction: column;
+		gap: 24px;
+		padding: 4px 24px 28px;
+		border-radius: 0 0 16px 16px;
+		background: var(--bg);
+		box-shadow: 0 8px 24px rgb(0 0 0 / 0.6), 0 0 0 1px var(--line);
+	}
+	[data-open] .panel {
+		display: flex;
+	}
+	.panel ul {
+		display: flex;
+		flex-direction: column;
+	}
+	.panel li a {
+		display: block;
+		padding: 10px 0;
+		font-size: 14px;
+		line-height: 17px;
+	}
+	.panel .button {
+		justify-content: center;
+		padding: 6px 18px;
+		line-height: 24px;
+	}
+
+	.link {
+		display: inline-flex;
+		align-items: center;
+		gap: 4px;
+		padding: 8px 14px;
+		border: 0;
+		border-radius: 8px;
+		background: none;
+		color: var(--text);
+		font: inherit;
+		font-size: 14px;
+		line-height: 14px;
+		cursor: pointer;
+		transition: background 0.2s;
+	}
+	.link:hover,
+	.link:focus-visible {
+		background: rgb(255 255 255 / 0.08);
+	}
+
+	@media (min-width: 1200px) {
+		.bar {
+			width: fit-content;
+			margin: 24px auto;
+			padding: 12px 24px;
+			border: 1px solid var(--line);
+			border-radius: 12px;
+			background: rgb(0 0 0 / 0.56);
+			backdrop-filter: blur(12px);
+			gap: 16px;
+		}
+		.nav {
+			background: none;
+		}
+		.burger,
+		.panel {
+			display: none !important;
+		}
+		.links {
+			display: flex;
+			align-items: center;
+			gap: 0;
+		}
+		.links > li:first-child {
+			margin-left: 0;
+		}
+		.book {
+			margin-left: 16px;
+			padding: 6px 13px;
+			border-radius: 10px;
+			line-height: 24px;
+		}
+		.dropdown {
+			position: relative;
+		}
+		.menu {
+			position: absolute;
+			top: 100%;
+			left: 0;
+			display: none;
+			min-width: 160px;
+			padding: 8px;
+			border: 1px solid var(--line);
+			border-radius: 12px;
+			background: #0d0d0d;
+		}
+		.dropdown:hover .menu,
+		.dropdown:focus-within .menu {
+			display: block;
+		}
+		.menu .link {
+			display: flex;
+			width: 100%;
+		}
+	}
+</style>

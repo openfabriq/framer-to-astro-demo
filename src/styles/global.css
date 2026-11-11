@@ -1,0 +1,109 @@
+@font-face {
+	font-family: 'Satoshi';
+	src: url('/fonts/satoshi-400.woff2') format('woff2');
+	font-weight: 400;
+	font-display: swap;
+}
+@font-face {
+	font-family: 'Satoshi';
+	src: url('/fonts/satoshi-500.woff2') format('woff2');
+	font-weight: 500;
+	font-display: swap;
+}
+@font-face {
+	font-family: 'Instrument Serif';
+	src: url('/fonts/instrument-serif-latin-400-italic.woff2') format('woff2');
+	font-style: italic;
+	font-weight: 400;
+	font-display: swap;
+}
+
+/* Breakpoints of the Framer site: desktop from 1200px, tablet 810 to 1199px, phone below 810px. */
+:root {
+	--bg: #000;
+	--text: #fff;
+	--muted: rgb(255 255 255 / 0.56);
+	--accent: #ff4533;
+	--surface: #1c1c1c;
+	--card: rgb(13 13 13 / 0.48);
+	--line: rgb(255 255 255 / 0.1);
+	--font: 'Satoshi', 'Arial', sans-serif;
+	--font-serif: 'Instrument Serif', 'Times New Roman', serif;
+	--gutter: 24px;
+}
+@media (min-width: 810px) {
+	:root {
+		--gutter: 32px;
+	}
+}
+@media (min-width: 1200px) {
+	:root {
+		--gutter: 64px;
+	}
+}
+
+*,
+*::before,
+*::after {
+	box-sizing: border-box;
+}
+body {
+	margin: 0;
+	background: var(--bg);
+	color: var(--text);
+	font: 500 16px/1.5 var(--font);
+	letter-spacing: -0.02em;
+	-webkit-font-smoothing: antialiased;
+}
+a {
+	color: inherit;
+	text-decoration: none;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+	margin: 0;
+}
+.serif {
+	font-family: var(--font-serif);
+	font-style: italic;
+	font-weight: 400;
+}
+.button {
+	display: inline-flex;
+	align-items: center;
+	padding: 12px 18px;
+	border-radius: 12px;
+	background: var(--accent);
+	box-shadow: 0 0 0 1px rgb(255 69 51 / 0.12);
+	color: #f9fafb;
+	font-size: 14px;
+	line-height: 20px;
+	font-weight: 500;
+	transition: filter 0.2s;
+}
+.button:hover {
+	filter: brightness(1.12);
+}
+/* Content is at most 1200px wide, centered; the gutter is the page's padding below that. */
+.container {
+	padding-inline: max(var(--gutter), calc((100% - 1200px) / 2));
+}
+.sr-only {
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	overflow: hidden;
+	clip-path: inset(50%);
+	white-space: nowrap;
+}
+@media (prefers-reduced-motion: reduce) {
+	* {
+		transition: none !important;
+		animation: none !important;
+	}
+}

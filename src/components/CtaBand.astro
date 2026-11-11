@@ -1,0 +1,89 @@
+---
+// "Ready to scale…" band shown above the footer of every page.
+---
+
+<section class="cta">
+	<div class="card">
+		<div class="text">
+			<h1>Ready to scale your brand to <span class="serif">new heights?</span></h1>
+			<p>
+				If you want to achieve ground-breaking growth with increased sales and profitability with paid ads,
+				then you're in the right place.
+			</p>
+		</div>
+		<a class="button" href="https://cal.com" target="_blank" rel="noopener">Book a call</a>
+	</div>
+</section>
+
+<style>
+	.cta {
+		padding: 64px 24px 96px;
+	}
+	.card {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: 24px;
+		max-width: 1000px;
+		margin-inline: auto;
+		padding: 48px 24px;
+		border: 1px solid var(--line);
+		border-radius: 24px;
+		background: var(--card);
+		text-align: center;
+	}
+	.text {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: 24px;
+		max-width: 521px;
+	}
+	h1 {
+		font-size: 38px;
+		line-height: 1.2;
+		letter-spacing: -0.04em;
+		font-weight: 500;
+	}
+	.serif {
+		font-size: 1.05em;
+	}
+	p {
+		max-width: 550px;
+		color: var(--muted);
+		font-size: 16px;
+		line-height: 24px;
+	}
+	@media (min-width: 810px) {
+		.cta {
+			padding-inline: 32px;
+		}
+		.card {
+			padding: 48px;
+		}
+		.text {
+			max-width: 650px;
+		}
+		h1 {
+			font-size: 50px;
+			line-height: 60px;
+		}
+		p {
+			font-size: 18px;
+			line-height: 27px;
+		}
+	}
+	@media (min-width: 1200px) {
+		.cta {
+			padding-inline: 64px;
+		}
+		.text {
+			max-width: 904px;
+		}
+		h1 {
+			font-size: 60px;
+			line-height: 72px;
+			max-width: 521px;
+		}
+	}
+</style>
