@@ -24,6 +24,9 @@ network: # the sites agents and commands reach
   - packages # the package registries, and GitHub
   - conversion.framer.media # the published site of LEGACY_SITE_URL
   - framerusercontent.com # the files the CMS points to, for the files script
+  # What a published Framer page loads, for the old site's screenshots: Google Fonts. Framer's editor bar
+  # (framer.com) and its analytics (events.framer.com) stay out: the pages render without them.
+  - fonts.gstatic.com
 
 limits:
   usd_per_run: 8
