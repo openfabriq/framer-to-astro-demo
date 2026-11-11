@@ -12,7 +12,7 @@ Every agent of the migration reads this skill. Keep it short and prescriptive.
   - `src/content.config.ts`: one collection per Framer CMS collection, with a Zod schema;
   - `src/content/<collection>/`: the imported entries, committed;
   - `src/lib/mappers/<collection>.ts`: one mapper per collection, a pure function from a CSV row of `migration/framer-cms/` to an entry (ids resolved through `migration/framer-cms/ids.json`, the gallery from `<collection>.galleries.json`, rich text cleaned of Framer's classes and inline styles), tested in `<collection>.test.ts` on samples saved in `migration/samples/`;
-  - `scripts/import.ts`, run by `pnpm import`: reads `migration/framer-cms/`, skips drafts, runs every mapper, writes the entries and copies the files they use from `framer-export/assets/`; it never calls the network, and running it twice gives the same files;
+  - `scripts/import.ts`, run by `pnpm run import`: reads `migration/framer-cms/`, skips drafts, runs every mapper, writes the entries and copies the files they use from `framer-export/assets/`; it never calls the network, and running it twice gives the same files;
   - `framer-export/` and `parity-report/` are in `.gitignore`;
   - `src/layouts/`, `src/components/`, `src/pages/`: one component per block several pages repeat, built once.
 - URLs: the new site keeps every old URL, or the `seo` ticket redirects it. Never change a URL silently.

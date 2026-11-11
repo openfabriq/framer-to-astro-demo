@@ -11,7 +11,7 @@ commands:
   build: pnpm build
   test: pnpm test
   files: scripts/framer-files.sh # the files of Framer's CDN that migration/framer-cms/ points to, into framer-export/; no token
-  import: pnpm import # migration/framer-cms/ and framer-export/ into the site's content; the foundation ticket creates it
+  import: pnpm run import # migration/framer-cms/ and framer-export/ into the site's content; the foundation ticket creates it
   parity: pnpm parity # compares the Framer and the Astro pages; the foundation ticket creates it
 checks: [build, test] # parity reads the published Framer site: agents run it themselves
 

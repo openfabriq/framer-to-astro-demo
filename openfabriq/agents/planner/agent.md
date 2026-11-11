@@ -30,7 +30,7 @@ One pull request, titled `docs(migration): the plan`, with these files:
   ```
 
   then `Part of #<migration issue>`, the representative URLs (paths on `$LEGACY_SITE_URL`), the decisions it relies on, what is in and out of scope, and acceptance criteria as checkboxes: the pages build, `pnpm parity` passes for its URLs at each breakpoint, the title, meta description, canonical and main heading match, and every link resolves. The type is one of:
-  - `foundation`: the project skeleton, layout, menus, routing, `.gitignore`, and the `pnpm import` and `pnpm parity` scripts; always T01, blocked by nothing, and every other ticket waits for it;
+  - `foundation`: the project skeleton, layout, menus, routing, `.gitignore`, and the `pnpm run import` and `pnpm parity` scripts; always T01, blocked by nothing, and every other ticket waits for it;
   - `content-type`: one CMS collection, its ids and galleries read on the published pages, its tested mapper and its import;
   - `template`: one page template, built for all its URLs;
   - `feature`: one Framer feature rebuilt (a form, an effect, a code component, search, filters, consent);
