@@ -81,7 +81,7 @@ const info = [
 	}
 	.main {
 		display: flex;
-		flex-direction: column-reverse;
+		flex-direction: column;
 		gap: 42px;
 		padding: 64px 32px;
 		border-top: 1px solid var(--line);
@@ -98,10 +98,18 @@ const info = [
 		letter-spacing: -0.05em;
 		font-weight: 500;
 	}
+	/* On phone the logo, the columns and the newsletter stack in that order. */
 	.brand {
-		display: flex;
-		flex-direction: column;
-		gap: 24px;
+		display: contents;
+	}
+	.mark {
+		order: 0;
+	}
+	.columns {
+		order: 1;
+	}
+	.newsletter {
+		order: 2;
 	}
 	.newsletter {
 		display: flex;
@@ -169,6 +177,11 @@ const info = [
 		border-radius: 50%;
 	}
 	@media (min-width: 810px) {
+		.brand {
+			display: flex;
+			flex-direction: column;
+			gap: 24px;
+		}
 		.main {
 			flex-direction: row;
 			justify-content: space-between;

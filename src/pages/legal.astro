@@ -22,6 +22,19 @@ const paragraphs = [
 	'Contact Us',
 	'For questions about this policy, email us at [Your Contact Email].',
 ];
+
+// Widths the old page gives some paragraphs (read at 1440 and 810px); the others run full width.
+// `at` is the width from 1200px, `tablet` the width from 810px.
+const widths: Record<string, { at?: number; tablet?: number }> = {
+	'At [Your': { at: 620, tablet: 620 },
+	'We may collect': { tablet: 620 },
+	'You can opt-out': { tablet: 480 },
+};
+const style = (p: string) => {
+	const key = Object.keys(widths).find((k) => p.startsWith(k));
+	const w = key && widths[key];
+	return w ? `--w-tablet: ${w.tablet ?? 'none'}${w.tablet ? 'px' : ''}; --w-wide: ${w.at ?? 'none'}${w.at ? 'px' : ''}` : undefined;
+};
 ---
 
 <Base
@@ -32,7 +45,7 @@ const paragraphs = [
 	<article class="legal container">
 		<p class="title">Legal Page</p>
 		<div class="body">
-			{paragraphs.map((p) => <p>{p}</p>)}
+			{paragraphs.map((p) => <p style={style(p)}>{p}</p>)}
 		</div>
 	</article>
 </Base>
@@ -58,6 +71,9 @@ const paragraphs = [
 		line-height: 24px;
 	}
 	@media (min-width: 810px) {
+		.body p {
+			max-width: var(--w-tablet, none);
+		}
 		.title {
 			font-size: 48px;
 			line-height: 52.8px;
@@ -68,6 +84,9 @@ const paragraphs = [
 		}
 	}
 	@media (min-width: 1200px) {
+		.body p {
+			max-width: var(--w-wide, none);
+		}
 		.legal {
 			padding-top: 52px;
 		}

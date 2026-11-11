@@ -2,8 +2,6 @@
 	"pages": [
 		{
 			"path": "/legal",
-			"heightTolerance": 0.07,
-			"heightReason": "The new footer has no newsletter form until T03 (about 70px), and the browser of the parity run cannot load Instrument Serif for the old page, so its call-to-action title wraps on 3 lines instead of 2. T03 sets the tolerance back to 0.05.",
 			"ignoreLinks": [
 				"https://framer.link/hxmzaehsan",
 				"https://www.framer.com/",

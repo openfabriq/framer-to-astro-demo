@@ -3,16 +3,21 @@ import '../styles/global.css';
 import Nav from '../components/Nav.astro';
 import CtaBand from '../components/CtaBand.astro';
 import Footer from '../components/Footer.astro';
+import defaultImage from '../assets/images/BxzYf4O0aEi9N5E3v0OvC9gGThQ.jpg';
+import favicon from '../assets/images/wfjeNCcKkQnHNi2mVo5vNi6BQI.png';
 
 interface Props {
 	title: string;
 	description: string;
 	/** Path of the page, `/` for home, no trailing slash elsewhere. */
 	path: string;
+	/** Social image (an imported image); the site's default when absent. */
+	image?: ImageMetadata;
 }
-const { title, description, path } = Astro.props;
+const { title, description, path, image = defaultImage } = Astro.props;
 // The address of the site is one setting: SITE_URL (astro.config.mjs).
 const canonical = new URL(path, Astro.site).href;
+const imageUrl = new URL(image.src, Astro.site).href;
 ---
 
 <!doctype html>
@@ -21,8 +26,7 @@ const canonical = new URL(path, Astro.site).href;
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<meta name="generator" content={Astro.generator} />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
+		<link rel="icon" type="image/png" href={favicon.src} />
 		<link rel="preload" href="/fonts/satoshi-500.woff2" as="font" type="font/woff2" crossorigin />
 		<title>{title}</title>
 		<meta name="description" content={description} />
@@ -32,9 +36,11 @@ const canonical = new URL(path, Astro.site).href;
 		<meta property="og:title" content={title} />
 		<meta property="og:description" content={description} />
 		<meta property="og:url" content={canonical} />
+		<meta property="og:image" content={imageUrl} />
 		<meta name="twitter:card" content="summary_large_image" />
 		<meta name="twitter:title" content={title} />
 		<meta name="twitter:description" content={description} />
+		<meta name="twitter:image" content={imageUrl} />
 	</head>
 	<body>
 		<Nav />
