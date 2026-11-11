@@ -1,0 +1,199 @@
+---
+import Logo from './Logo.astro';
+import avatar from '../assets/images/OeUMJwP5hOLQ8dVue2LqSYO5os.jpg';
+import { Image } from 'astro:assets';
+
+// The old footer's links all pointed at home anchors; they point at the pages now.
+// /coming-soon is dropped (decision 1).
+const pages = [
+	{ href: '/about', label: 'About' },
+	{ href: '/blog', label: 'Blog' },
+	{ href: '/services', label: 'Services' },
+	{ href: '/404', label: '404' },
+];
+const info = [
+	{ href: '/#faq', label: 'FAQ' },
+	{ href: '/contact', label: 'Contact' },
+	{ href: '/legal', label: 'Legal' },
+];
+---
+
+<footer class="footer">
+	<div class="glow" aria-hidden="true"></div>
+	<div class="main">
+		<div class="brand">
+			<a class="mark" href="/" aria-label="Conversion, home">
+				<Logo size={34} />
+				<h1>Conver<span class="serif">sion</span></h1>
+			</a>
+			<div class="newsletter">
+				<p class="n-title">Join our newsletter</p>
+				<p class="n-text">
+					Sign up to our mailing list below and be the first to know about new updates. Don't worry, we hate spam
+					too.
+				</p>
+				<!-- The newsletter form is T03's: it goes in this slot. -->
+				<slot name="newsletter" />
+			</div>
+		</div>
+		<div class="columns">
+			<div class="col">
+				<p class="c-title">Pages</p>
+				<ul>{pages.map((l) => <li><a href={l.href}>{l.label}</a></li>)}</ul>
+			</div>
+			<div class="col">
+				<p class="c-title">Information</p>
+				<ul>{info.map((l) => <li><a href={l.href}>{l.label}</a></li>)}</ul>
+			</div>
+		</div>
+	</div>
+	<div class="bottom">
+		<p>Created by</p>
+		<a class="author" href="https://x.com/hxmzaehsan" target="_blank" rel="noopener">
+			<Image src={avatar} alt="" width={24} height={24} />
+			Hamza Ehsan
+		</a>
+	</div>
+</footer>
+
+<style>
+	.footer {
+		position: relative;
+	}
+	.glow {
+		position: absolute;
+		top: -90px;
+		left: 50%;
+		width: min(900px, 100%);
+		height: 520px;
+		translate: -50% 0;
+		background:
+			radial-gradient(ellipse 28% 20% at 50% 14%, rgb(255 170 90 / 0.85), transparent 70%),
+			radial-gradient(ellipse 22% 14% at 68% 8%, rgb(200 40 70 / 0.45), transparent 70%),
+			radial-gradient(ellipse 30% 36% at 50% 62%, rgb(20 120 190 / 0.5), transparent 70%);
+		filter: blur(20px);
+		pointer-events: none;
+		overflow: hidden;
+	}
+	.main,
+	.bottom {
+		position: relative;
+	}
+	.main {
+		display: flex;
+		flex-direction: column-reverse;
+		gap: 42px;
+		padding: 64px 32px;
+		border-top: 1px solid var(--line);
+		background: rgb(0 0 0 / 0.56);
+	}
+	.mark {
+		display: flex;
+		align-items: center;
+		gap: 12px;
+	}
+	.mark h1 {
+		font-size: 32px;
+		line-height: 35.2px;
+		letter-spacing: -0.05em;
+		font-weight: 500;
+	}
+	.brand {
+		display: flex;
+		flex-direction: column;
+		gap: 24px;
+	}
+	.newsletter {
+		display: flex;
+		flex-direction: column;
+		gap: 8px;
+		max-width: 397px;
+	}
+	.n-title {
+		font-size: 18px;
+		line-height: 25.2px;
+	}
+	.n-text {
+		color: var(--muted);
+		line-height: 24px;
+	}
+	.columns {
+		display: flex;
+		flex-direction: column;
+		gap: 24px;
+	}
+	.col {
+		display: flex;
+		flex-direction: column;
+		gap: 16px;
+	}
+	.c-title {
+		line-height: 24px;
+	}
+	ul {
+		display: flex;
+		gap: 16px;
+		margin: 0;
+		padding: 0;
+		list-style: none;
+	}
+	li a {
+		color: var(--muted);
+		font-size: 14px;
+		line-height: 16.8px;
+		transition: color 0.2s;
+	}
+	li a:hover {
+		color: var(--text);
+	}
+	.bottom {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		gap: 12px;
+		padding: 24px 32px;
+		border-top: 1px solid var(--line);
+		background: rgb(10 10 10 / 0.48);
+		font-size: 14px;
+		line-height: 21px;
+	}
+	.bottom p {
+		color: #999;
+	}
+	.author {
+		display: flex;
+		align-items: center;
+		gap: 8px;
+	}
+	.author :global(img) {
+		border-radius: 50%;
+	}
+	@media (min-width: 810px) {
+		.main {
+			flex-direction: row;
+			justify-content: space-between;
+			align-items: flex-start;
+			padding-inline: 64px;
+		}
+		.columns {
+			flex-direction: row;
+			gap: 32px;
+		}
+		ul {
+			flex-direction: column;
+		}
+		.bottom {
+			justify-content: flex-end;
+			padding-inline: 64px;
+		}
+	}
+	@media (min-width: 1200px) {
+		.main,
+		.bottom {
+			padding-inline: max(var(--gutter), calc((100% - 1200px) / 2));
+		}
+		.columns {
+			align-self: flex-end;
+		}
+	}
+</style>
