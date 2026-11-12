@@ -1,5 +1,5 @@
 # T10 [seo] Redirects, sitemap, robots, metadata
-Status: open
+Status: done
 Blocked by: T02, T03, T04, T05, T06, T07, T08, T09
 
 Part of #1
