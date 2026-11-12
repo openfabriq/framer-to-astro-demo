@@ -1,6 +1,6 @@
 ---
 // "Meet the incredible team": four portrait cards (they link to LinkedIn on the Framer page).
-// The side-scrolling movement is T09's; here the row scrolls by hand when it does not fit.
+// The row drifts sideways with the page scroll (CSS scroll-driven, T09); it scrolls by hand when it does not fit.
 import { Image } from 'astro:assets';
 import SectionHead from './SectionHead.astro';
 import m1 from '../../assets/images/nH8XKwwz1lIuO90t93Et6aUgxU.png';
@@ -94,6 +94,24 @@ const team = [
 	.role {
 		color: var(--muted);
 		font-size: 16px;
+	}
+	@keyframes drift {
+		from {
+			translate: 20px 0;
+		}
+		to {
+			translate: -20px 0;
+		}
+	}
+	@media (prefers-reduced-motion: no-preference) {
+		@supports (animation-timeline: view()) {
+			ul {
+				animation-name: drift;
+				animation-timing-function: linear;
+				animation-fill-mode: both;
+				animation-timeline: view();
+			}
+		}
 	}
 	@media (max-width: 809px) {
 		li {
