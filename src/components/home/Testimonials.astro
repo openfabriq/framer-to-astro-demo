@@ -1,0 +1,287 @@
+---
+// "Our Clients": heading, four quotes in a scroll-snap slider (drag and arrows from the script below), call to action.
+import t1 from '../../assets/logos/testimonial-1.svg?raw';
+import t2 from '../../assets/logos/testimonial-2.svg?raw';
+import t3 from '../../assets/logos/testimonial-3.svg?raw';
+import t4 from '../../assets/logos/testimonial-4.svg?raw';
+
+const quotes = [
+	{
+		logo: t1,
+		video: 'cd8c4c22-d07a-4258-9e11-226268b5334c',
+		text: 'Our results and online presence went through the roof more or less overnight, mind-blowing!',
+		name: 'Malik Shkraba',
+		role: 'COO of Friday',
+	},
+	{
+		logo: t2,
+		text: "These guy don't mess around. we saw results from month one. If you want to grow your business, look no further.",
+		name: 'Tony Gomez',
+		role: 'Founder of Thursday',
+	},
+	{
+		logo: t3,
+		text: 'Conversion absolutely blew the previous agency we were working with out of the water.',
+		name: 'Naomi Campbell',
+		role: 'CEO of Wednesday',
+	},
+	{
+		logo: t4,
+		text: "From where we were before Conversion to where we are now; it's absolutely apart.",
+		name: 'Charlotte Johansen',
+		role: 'Founder of Tuesday',
+	},
+];
+---
+
+<section class="clients container" id="clients">
+	<span class="badge">Our Clients</span>
+	<h2>Hear it directly from <span class="serif">our clients.</span></h2>
+	<p class="sub">
+		Hear what our clients have to say. Our testimonials reflect the satisfaction our clients have in our
+		services.
+	</p>
+
+	<div class="slider" data-slider role="region" aria-roledescription="carousel" aria-label="Testimonials">
+		<ul class="track" tabindex="0">
+			{
+				quotes.map((q, i) => (
+					<li aria-label={`${i + 1} of ${quotes.length}`}>
+						<figure class="card">
+							<div class="media">
+								{q.video && (
+									<iframe
+										src={`https://iframe.mediadelivery.net/embed/234627/${q.video}?autoplay=false&loop=false&muted=false&preload=false&responsive=false`}
+										title={`${q.name}, video testimonial`}
+										loading="lazy"
+										allow="encrypted-media; picture-in-picture"
+										allowfullscreen
+									/>
+								)}
+							</div>
+							<div class="logo" aria-hidden="true" set:html={q.logo} />
+							<blockquote>"{q.text}"</blockquote>
+							<figcaption>
+								<span class="name">{q.name}</span>
+								<span class="role">{q.role}</span>
+							</figcaption>
+						</figure>
+					</li>
+				))
+			}
+		</ul>
+		<div class="arrows">
+			<button type="button" data-dir="-1" aria-label="Previous testimonial"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M10 3 5 8l5 5" /></svg></button>
+			<button type="button" data-dir="1" aria-label="Next testimonial"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="m6 3 5 5-5 5" /></svg></button>
+		</div>
+	</div>
+
+	<p class="statement">
+		Here at Conversion, we focus on returns. We're dedicated to scaling your brand with paid advertising. Break
+		free and take your brand to next level.
+	</p>
+	<a class="button large" href="https://cal.com" target="_blank" rel="noopener">Book a 15-min call</a>
+</section>
+
+<script>
+	// The slider: arrows scroll one card, a mouse drags the track; touch and keyboard use the native scroll.
+	for (const slider of document.querySelectorAll<HTMLElement>('[data-slider]')) {
+		const track = slider.querySelector<HTMLElement>('.track')!;
+		const step = () => (track.querySelector('li')?.getBoundingClientRect().width ?? 300) + 24;
+		slider.querySelectorAll<HTMLButtonElement>('[data-dir]').forEach((b) =>
+			b.addEventListener('click', () => {
+				const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+				track.scrollBy({ left: Number(b.dataset.dir) * step(), behavior: reduce ? 'auto' : 'smooth' });
+			}),
+		);
+		let startX = 0;
+		let startLeft = 0;
+		let dragging = false;
+		track.addEventListener('pointerdown', (e) => {
+			if (e.pointerType !== 'mouse') return;
+			dragging = true;
+			startX = e.clientX;
+			startLeft = track.scrollLeft;
+			track.classList.add('dragging');
+		});
+		window.addEventListener('pointermove', (e) => {
+			if (dragging) track.scrollLeft = startLeft - (e.clientX - startX);
+		});
+		window.addEventListener('pointerup', () => {
+			dragging = false;
+			track.classList.remove('dragging');
+		});
+	}
+</script>
+
+<style>
+	.clients {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		text-align: center;
+		padding-top: 24px;
+		padding-bottom: 96px;
+		scroll-margin-top: 80px;
+	}
+	.badge {
+		padding: 8px 16px;
+		border: 1px solid var(--line);
+		border-radius: 12px;
+		background: #111;
+		font-size: 16px;
+	}
+	h2 {
+		margin-top: 24px;
+		font-size: 64px;
+		line-height: 1.15;
+		letter-spacing: -0.05em;
+		font-weight: 500;
+	}
+	h2 .serif {
+		letter-spacing: -0.03em;
+	}
+	.sub {
+		max-width: 520px;
+		margin-top: 24px;
+		color: var(--muted);
+		font-size: 18px;
+		line-height: 1.7;
+	}
+	.slider {
+		position: relative;
+		width: 100vw;
+		margin-top: 64px;
+	}
+	.track {
+		display: flex;
+		gap: 24px;
+		margin: 0;
+		padding: 0 max(var(--gutter), calc((100vw - 1200px) / 2));
+		list-style: none;
+		overflow-x: auto;
+		scroll-snap-type: x mandatory;
+		scroll-padding-inline: max(var(--gutter), calc((100vw - 1200px) / 2));
+		scrollbar-width: none;
+		mask-image: linear-gradient(to right, #000 0%, #000 90%, transparent 100%);
+		cursor: grab;
+	}
+	.track::-webkit-scrollbar {
+		display: none;
+	}
+	.track:global(.dragging) {
+		cursor: grabbing;
+		scroll-snap-type: none;
+		user-select: none;
+	}
+	.track li {
+		flex: none;
+		width: 419px;
+		scroll-snap-align: start;
+	}
+	.card {
+		display: flex;
+		flex-direction: column;
+		gap: 24px;
+		height: 100%;
+		margin: 0;
+		padding: 32px;
+		border: 1px solid var(--line);
+		border-radius: 24px;
+		background: #0d0d0d;
+		text-align: left;
+	}
+	.media {
+		position: relative;
+		height: 200px;
+		border: 1px solid var(--line);
+		border-radius: 12px;
+		background: #0d0d0d;
+		overflow: hidden;
+	}
+	.media iframe {
+		position: absolute;
+		inset: 0;
+		width: 100%;
+		height: 100%;
+		border: 0;
+	}
+	.logo :global(svg) {
+		display: block;
+		height: 34px;
+		width: auto;
+	}
+	blockquote {
+		margin: 0;
+		max-width: 290px;
+		min-height: 66px;
+		color: var(--muted);
+		font-size: 16px;
+		line-height: 1.4;
+	}
+	figcaption {
+		display: flex;
+		flex-direction: column;
+		margin-top: auto;
+		color: var(--muted);
+		font-size: 14px;
+		line-height: 1.4;
+	}
+	.role {
+		font-size: 12px;
+	}
+	.arrows {
+		display: flex;
+		justify-content: center;
+		gap: 12px;
+		margin-top: 24px;
+	}
+	.arrows button {
+		width: 40px;
+		height: 40px;
+		border: 1px solid var(--line);
+		border-radius: 12px;
+		background: #0d0d0d;
+		color: var(--text);
+		font: inherit;
+		cursor: pointer;
+	}
+	.statement {
+		max-width: 1060px;
+		margin-top: 80px;
+		font-size: 48px;
+		line-height: 1.2;
+		letter-spacing: -0.04em;
+	}
+	.button.large {
+		margin-top: 40px;
+		font-size: 16px;
+		padding: 12px 18px;
+	}
+	@media (max-width: 1199px) {
+		h2 {
+			font-size: 52px;
+		}
+		.statement {
+			font-size: 40px;
+		}
+	}
+	@media (max-width: 809px) {
+		h2 {
+			font-size: 36px;
+		}
+		.sub {
+			font-size: 16px;
+		}
+		.track li {
+			width: 300px;
+		}
+		.card {
+			padding: 24px;
+		}
+		.statement {
+			margin-top: 56px;
+			font-size: 28px;
+		}
+	}
+</style>

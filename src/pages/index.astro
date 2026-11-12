@@ -1,11 +1,19 @@
 ---
 import Base from '../layouts/Base.astro';
+import Hero from '../components/home/Hero.astro';
+import Clients from '../components/home/Clients.astro';
+import Testimonials from '../components/home/Testimonials.astro';
+import Results from '../components/home/Results.astro';
 ---
 
-<!-- Stub: the home page's content comes with T04 and T05; only the shared layout is here. -->
 <Base
 	title="Conversion - Framer Website Template for Agencies"
 	description="The Conversion Framer template is perfect for digital marketing agencies and freelancers who want a clean, modern, and sleek website that will convert visitors into leads and clients."
 	path="/"
 >
+	<Hero />
+	<Clients />
+	<Testimonials />
+	<Results />
+	<!-- From "How can we help you?" down: T05. -->
 </Base>

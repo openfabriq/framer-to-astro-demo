@@ -1,0 +1,138 @@
+---
+// "Results speak for themselves": three case cards. The ticker movement is T09's.
+import { Image } from 'astro:assets';
+import nostalgie from '../../assets/images/AMFThDoNPWPusJqErRvuXGkxQ.png';
+import classice from '../../assets/images/Ax0W6SEU8vhKTPP4NrYJymHJIoM.png';
+import yogamy from '../../assets/images/sLRaKXkHf8RbnHdn7LZOqzXjnu4.png';
+
+const cases = [
+	{ image: nostalgie, name: 'Nostalgie', headline: '47% increase in new customers.', stats: ['65% Increase in CTR', '37% Reduction in CPA'] },
+	{ image: classice, name: 'Classicé', headline: '34% increase in online sales.', stats: ['57% Increase in CTR', '69% Reduction in CPR'] },
+	{ image: yogamy, name: 'Yogamy', headline: 'From $0 to $1,000,000 in sales.', stats: ['85% Increase in CTR', '36% Reduction in CPR'] },
+];
+---
+
+<section class="results container" id="results">
+	<span class="badge">Results</span>
+	<h2>Results speak for <span class="serif">themselves.</span></h2>
+	<p class="sub">
+		We've worked across a number of industries and have achieved some incredible results with some incredible
+		people and brands.
+	</p>
+	<ul>
+		{
+			cases.map((c) => (
+				<li>
+					<Image src={c.image} alt="" width={760} loading="eager" />
+					<div class="info">
+						<h3>{c.name}</h3>
+						<p class="headline">{c.headline}</p>
+						<p class="stats">
+							{c.stats.map((s) => <span>{s}</span>)}
+						</p>
+					</div>
+				</li>
+			))
+		}
+	</ul>
+</section>
+
+<style>
+	.results {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		text-align: center;
+		padding-bottom: 96px;
+		scroll-margin-top: 80px;
+	}
+	.badge {
+		padding: 8px 16px;
+		border: 1px solid var(--line);
+		border-radius: 12px;
+		background: #111;
+	}
+	h2 {
+		margin-top: 24px;
+		font-size: 64px;
+		line-height: 1.15;
+		letter-spacing: -0.05em;
+		font-weight: 500;
+	}
+	h2 .serif {
+		letter-spacing: -0.03em;
+	}
+	.sub {
+		max-width: 620px;
+		margin-top: 24px;
+		color: var(--muted);
+		font-size: 18px;
+		line-height: 1.7;
+	}
+	ul {
+		display: flex;
+		gap: 24px;
+		width: 100%;
+		overflow-x: auto;
+		margin: 64px 0 0;
+		padding: 0;
+		list-style: none;
+	}
+	li {
+		position: relative;
+		flex: 0 0 380px;
+		height: 400px;
+		overflow: hidden;
+		border-radius: 24px;
+		background: #0d0d0d;
+	}
+	li :global(img) {
+		position: absolute;
+		inset: 0;
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+	}
+	.info {
+		position: absolute;
+		inset: auto 0 0;
+		display: flex;
+		flex-direction: column;
+		gap: 4px;
+		align-items: center;
+		padding: 24px 16px;
+		background: linear-gradient(to top, rgb(0 0 0 / 0.75), transparent);
+	}
+	h3 {
+		font-size: 28px;
+		font-weight: 500;
+		line-height: 1.2;
+	}
+	.headline {
+		font-size: 14px;
+	}
+	.stats {
+		display: flex;
+		gap: 12px;
+		color: var(--muted);
+		font-size: 14px;
+	}
+	.stats span {
+		padding: 4px 10px;
+		border-radius: 12px;
+		background: rgb(13 13 13 / 0.56);
+	}
+	@media (max-width: 1199px) {
+		h2 {
+			font-size: 52px;
+		}
+	}
+	@media (max-width: 809px) {
+		h2 {
+			font-size: 36px;
+		}
+		.sub {
+			font-size: 16px;
+		}
+	}
+</style>

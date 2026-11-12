@@ -1,0 +1,55 @@
+---
+// "You're in good hands" logo strip. The ticker animation is T09's: the logos stand still here.
+import c1 from '../../assets/logos/client-1.svg?raw';
+import c2 from '../../assets/logos/client-2.svg?raw';
+import c3 from '../../assets/logos/client-3.svg?raw';
+import c4 from '../../assets/logos/client-4.svg?raw';
+import c5 from '../../assets/logos/client-5.svg?raw';
+import c6 from '../../assets/logos/client-6.svg?raw';
+
+const logos = [c1, c2, c3, c4, c5, c6];
+---
+
+<section class="clients container" id="clients-logos">
+	<p>You're in good hands:</p>
+	<ul aria-hidden="true">
+		{logos.map((svg) => <li set:html={svg} />)}
+	</ul>
+</section>
+
+<style>
+	.clients {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: 32px;
+		padding-bottom: 96px;
+		color: var(--text);
+	}
+	p {
+		color: var(--muted);
+	}
+	ul {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: center;
+		align-items: center;
+		gap: 24px 64px;
+		margin: 0;
+		padding: 0;
+		list-style: none;
+	}
+	li :global(svg) {
+		display: block;
+		height: 32px;
+		width: auto;
+	}
+	@media (max-width: 809px) {
+		ul {
+			gap: 20px 32px;
+		}
+		li :global(svg) {
+			height: 26px;
+		}
+	}
+</style>
