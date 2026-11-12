@@ -1,0 +1,88 @@
+{
+	"pages": [
+		{
+			"path": "/blog/high-converting-pages",
+			"ignoreLinks": [
+				"https://framer.link/hxmzaehsan",
+				"https://www.framer.com/",
+				"/coming-soon",
+				"/#results",
+				"/#services",
+				"/#comparison",
+				"/#about-us",
+				"/blog/high-converting-pages#clear-and-compelling-headlines",
+				"/blog/high-converting-pages#conclusion",
+				"/blog/high-converting-pages#focus-on-benefits-not-just-features",
+				"/blog/high-converting-pages#understand-your-target-audience",
+				"/blog/high-converting-pages#use-social-proof-to-build-trust"
+			],
+			"ignoreText": [
+				"Made in Framer",
+				"Coming Soon",
+				"Create a free website with Framer, the website builder loved by startups, designers and agencies.",
+				"Digital Marketing",
+				"Websites",
+				"Section"
+			],
+			"ignoreTextBelow1200": [
+				"About Us",
+				"Process"
+			],
+			"why": "The new \"In this post\" entries are anchors to the headings; the old ones are scroll buttons, not links. The committed CMS export (migration/framer-cms/blog.csv) gives the category shown; the published page shows another. The export is the source of truth, so it is listed here, not edited by hand; a maintainer can confirm which is right. Framer also has a hidden \"Section\" text at 1200px."
+		},
+		{
+			"path": "/blog/top-marketing-trends",
+			"ignoreLinks": [
+				"https://framer.link/hxmzaehsan",
+				"https://www.framer.com/",
+				"/coming-soon",
+				"/#results",
+				"/#services",
+				"/#comparison",
+				"/#about-us",
+				"/blog/top-marketing-trends#ai-powered-marketing-tools",
+				"/blog/top-marketing-trends#conclusion",
+				"/blog/top-marketing-trends#first-party-data-collection",
+				"/blog/top-marketing-trends#personalized-customer-experiences",
+				"/blog/top-marketing-trends#rise-of-short-form-video-content",
+				"/blog/top-marketing-trends#sustainability-and-social-responsibility",
+				"/blog/top-marketing-trends#voice-search-and-smart-devices"
+			],
+			"ignoreText": [
+				"Made in Framer",
+				"Coming Soon",
+				"Create a free website with Framer, the website builder loved by startups, designers and agencies.",
+				"Digital Marketing",
+				"Trends"
+			],
+			"ignoreTextBelow1200": [
+				"About Us",
+				"Process"
+			],
+			"why": "The new \"In this post\" entries are anchors to the headings; the old ones are scroll buttons, not links. The committed CMS export (migration/framer-cms/blog.csv) gives the category shown; the published page shows another. The export is the source of truth, so it is listed here, not edited by hand; a maintainer can confirm which is right."
+		},
+		{
+			"path": "/404",
+			"ignoreLinks": [
+				"https://framer.link/hxmzaehsan",
+				"https://www.framer.com/",
+				"/coming-soon",
+				"/#results",
+				"/#services",
+				"/#comparison",
+				"/#about-us"
+			],
+			"ignoreText": [
+				"Made in Framer",
+				"Coming Soon",
+				"Create a free website with Framer, the website builder loved by startups, designers and agencies."
+			],
+			"ignoreTextBelow1200": [
+				"About Us",
+				"Process",
+				"Book a call"
+			],
+			"why": "Framer renders \"Book a call\" a second time on the 404 page below 1200px (the nav's mobile copy); the new nav has one."
+		}
+	]
+}
