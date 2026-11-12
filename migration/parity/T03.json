@@ -1,0 +1,25 @@
+{
+	"pages": [
+		{
+			"path": "/contact",
+			"ignoreLinks": [
+				"https://framer.link/hxmzaehsan",
+				"https://www.framer.com/",
+				"/coming-soon",
+				"/#results",
+				"/#services",
+				"/#comparison",
+				"/#about-us"
+			],
+			"ignoreText": [
+				"Made in Framer",
+				"Coming Soon",
+				"Create a free website with Framer, the website builder loved by startups, designers and agencies."
+			],
+			"ignoreTextBelow1200": [
+				"About Us",
+				"Process"
+			]
+		}
+	]
+}

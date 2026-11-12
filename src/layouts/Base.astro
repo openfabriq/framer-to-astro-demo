@@ -13,8 +13,10 @@ interface Props {
 	path: string;
 	/** Social image (an imported image); the site's default when absent. */
 	image?: ImageMetadata;
+	/** The "Ready to scale" band above the footer; /contact has none. */
+	cta?: boolean;
 }
-const { title, description, path, image = defaultImage } = Astro.props;
+const { title, description, path, image = defaultImage, cta = true } = Astro.props;
 // The address of the site is one setting: SITE_URL (astro.config.mjs).
 const canonical = new URL(path, Astro.site).href;
 const imageUrl = new URL(image.src, Astro.site).href;
@@ -47,7 +49,7 @@ const imageUrl = new URL(image.src, Astro.site).href;
 		<main>
 			<slot />
 		</main>
-		<CtaBand />
-		<Footer />
+		{cta && <CtaBand />}
+		<Footer glow={cta} />
 	</body>
 </html>

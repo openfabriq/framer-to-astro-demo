@@ -71,10 +71,19 @@ const check = (page, what, ok, detail = '') => {
 };
 const show = (list) => list.map((x) => JSON.stringify(x)).join(', ');
 
+// A connection kept alive from the previous page may have been closed by the other side: try again.
+const get = async (url, tries = 3) => {
+	for (let i = 1; ; i++) {
+		try {
+			return await (await fetch(url)).text();
+		} catch (err) {
+			if (i >= tries) throw err;
+		}
+	}
+};
+
 for (const page of pages) {
-	const [oldHtml, newHtml] = await Promise.all(
-		[OLD, NEW].map((o) => fetch(o + page.path).then((r) => r.text())),
-	);
+	const [oldHtml, newHtml] = await Promise.all([OLD, NEW].map((o) => get(o + page.path)));
 	const oldHead = parseHead(oldHtml);
 	const newHead = parseHead(newHtml);
 	for (const key of ['title', 'description']) {
