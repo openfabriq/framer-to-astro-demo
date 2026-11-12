@@ -1,4 +1,5 @@
 ---
+import { withBase } from '../lib/url';
 import Logo from './Logo.astro';
 import Form from './Form.astro';
 import avatar from '../assets/images/OeUMJwP5hOLQ8dVue2LqSYO5os.jpg';
@@ -28,7 +29,7 @@ const info = [
 	{glow && <div class="glow" aria-hidden="true"></div>}
 	<div class="main">
 		<div class="brand">
-			<a class="mark" href="/" aria-label="Conversion, home">
+			<a class="mark" href={withBase('/')} aria-label="Conversion, home">
 				<Logo size={34} />
 				<h1>Conver<span class="serif">sion</span></h1>
 			</a>
@@ -50,11 +51,11 @@ const info = [
 		<div class="columns">
 			<div class="col">
 				<p class="c-title">Pages</p>
-				<ul>{pages.map((l) => <li><a href={l.href}>{l.label}</a></li>)}</ul>
+				<ul>{pages.map((l) => <li><a href={withBase(l.href)}>{l.label}</a></li>)}</ul>
 			</div>
 			<div class="col">
 				<p class="c-title">Information</p>
-				<ul>{info.map((l) => <li><a href={l.href}>{l.label}</a></li>)}</ul>
+				<ul>{info.map((l) => <li><a href={withBase(l.href)}>{l.label}</a></li>)}</ul>
 			</div>
 		</div>
 	</div>

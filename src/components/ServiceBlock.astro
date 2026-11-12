@@ -1,4 +1,5 @@
 ---
+import { withBase } from '../lib/url';
 // One service: description and bullet list next to a "Project Investment" card.
 import { Image } from 'astro:assets';
 
@@ -28,7 +29,7 @@ const { title, text, items, image, price, flip = false } = Astro.props;
 		<div class="invest">
 			<h4>Project Investment</h4>
 			<p>{price}</p>
-			<a class="button" href="/contact">Book a call</a>
+			<a class="button" href={withBase('/contact')}>Book a call</a>
 		</div>
 	</div>
 </section>

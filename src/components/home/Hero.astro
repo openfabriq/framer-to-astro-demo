@@ -1,4 +1,5 @@
 ---
+import { withBase } from '../../lib/url';
 import { Image } from 'astro:assets';
 import a1 from '../../assets/images/mEIBGBqwotHJ35YaPhM5ljuLc2U.png';
 import a2 from '../../assets/images/2B9gp2gJnBjBX44Yovd3HRxqiXM.png';
@@ -34,7 +35,7 @@ const avatars = [a1, a2, a3, a4, a5];
 	</p>
 	<div class="buttons">
 		<a class="button large" href="https://cal.com" target="_blank" rel="noopener">Book a call</a>
-		<a class="button large secondary" href="/#clients">Learn More</a>
+		<a class="button large secondary" href={withBase('/#clients')}>Learn More</a>
 	</div>
 	<div class="glow" aria-hidden="true"></div>
 </section>

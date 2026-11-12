@@ -11,6 +11,9 @@ export function redirectsFromCsv(text: string): Record<string, string> {
 	return out;
 }
 
-export function allRedirects(csv: string | undefined): Record<string, string> {
-	return { ...(csv ? redirectsFromCsv(csv) : {}), ...baseRedirects };
+/** Astro prefixes the `from` with the base but not the `to`: a site path as target gets the base here. */
+export function allRedirects(csv: string | undefined, base = '/'): Record<string, string> {
+	const root = base.replace(/\/+$/, '');
+	const all = { ...(csv ? redirectsFromCsv(csv) : {}), ...baseRedirects };
+	return Object.fromEntries(Object.entries(all).map(([from, to]) => [from, to.startsWith('/') ? root + to : to]));
 }
