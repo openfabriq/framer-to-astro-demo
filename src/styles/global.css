@@ -128,7 +128,9 @@ p {
 	}
 	@supports (animation-timeline: view()) {
 		main > :not(:first-child) {
-			animation: appear linear both;
+			animation-name: appear;
+			animation-timing-function: linear;
+			animation-fill-mode: both;
 			animation-timeline: view();
 			animation-range: entry 0% entry 40%;
 		}
