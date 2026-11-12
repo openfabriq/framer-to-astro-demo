@@ -1,0 +1,87 @@
+---
+// FAQ as native <details> (decision 3). The Framer page has no answer text for any question: an open
+// item shows no body, so none is invented here; it is flagged in the pull request.
+const questions = [
+	'How do you tailor Google Ads strategies for different businesses?',
+	"What's unique about your Meta Ads approach?",
+	'How do you ensure effective TikTok Ads targeting and engagement?',
+	'How do you choose ad formats and placements across platforms?',
+	'What reporting and analytics do you provide for ad campaign tracking?',
+	'Do you offer ongoing ad optimization and management services?',
+];
+---
+
+<section class="faq" id="faq" aria-label="Frequently asked questions">
+	{
+		questions.map((q) => (
+			<details>
+				<summary>
+					<span>{q}</span>
+					<i aria-hidden="true" />
+				</summary>
+			</details>
+		))
+	}
+</section>
+
+<style>
+	.faq {
+		display: flex;
+		flex-direction: column;
+		gap: 16px;
+		max-width: 800px;
+		margin: 0 auto;
+		padding: 0 24px 96px;
+		scroll-margin-top: 80px;
+		box-sizing: content-box;
+	}
+	details {
+		border: 1px solid var(--line);
+		border-radius: 12px;
+		background: #0d0d0d;
+	}
+	summary {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 16px;
+		padding: 18px 20px;
+		font-size: 18px;
+		line-height: 1.5;
+		letter-spacing: -0.02em;
+		cursor: pointer;
+		list-style: none;
+	}
+	summary::-webkit-details-marker {
+		display: none;
+	}
+	i {
+		position: relative;
+		flex: none;
+		width: 14px;
+		height: 14px;
+	}
+	i::before,
+	i::after {
+		content: '';
+		position: absolute;
+		background: #fff;
+		transition: transform 0.2s;
+	}
+	i::before {
+		inset: 6px 0 auto;
+		height: 2px;
+	}
+	i::after {
+		inset: 0 auto 0 6px;
+		width: 2px;
+	}
+	details[open] i::after {
+		transform: scaleY(0);
+	}
+	@media (max-width: 809px) {
+		summary {
+			font-size: 16px;
+		}
+	}
+</style>

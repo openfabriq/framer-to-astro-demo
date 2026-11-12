@@ -1,0 +1,27 @@
+{
+	"pages": [
+		{
+			"path": "/",
+			"ignoreLinks": [
+				"/#about-us",
+				"/#comparison",
+				"/#results",
+				"/#services",
+				"/coming-soon",
+				"https://framer.link/hxmzaehsan",
+				"https://www.framer.com/"
+			],
+			"ignoreText": [
+				"Coming Soon",
+				"Made in Framer",
+				"Create a free website with Framer, the website builder loved by startups, designers and agencies."
+			],
+			"ignoreTextBelow1200": [
+				"About Us",
+				"Process"
+			],
+			"heightTolerance": 0.15,
+			"why": "Home page, decision 2 (faithful but simplified, looser tolerance 15 %: the tablet layout, 14 % shorter than Framer's, is the largest gap, desktop 0.4 %, phone 3.3 %): the gradient glows are CSS approximations, the 4 video layers are dropped and the FAQ has no answers. The ignored links and text are shared-chrome exceptions of T01 (Made in Framer, Coming Soon, the nav's /#about-us); /#about-us, the About Us section, and /#clients belong to T04's section."
+		}
+	]
+}

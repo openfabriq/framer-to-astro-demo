@@ -1,0 +1,93 @@
+---
+import SectionHead from './SectionHead.astro';
+
+const steps = [
+	{ title: 'Funnel Audit', text: "We'll start by analyzing your sales funnel and seeing what's holding you back.", icon: 'person' },
+	{ title: 'Campaign Setup', text: 'Then, with your business goals in mind, we will set up the advertising campaigns.', icon: 'window' },
+	{ title: 'Maximize Profit', text: "We'll then work towards driving the cost per action down to maximize profit.", icon: 'bag' },
+];
+---
+
+<section class="process container" id="process">
+	<SectionHead
+		badge="Process"
+		sub="From Google ads, to Meta ads, to TikTok ads, and even content creation, we've got you covered on everything front."
+	>
+		Our simple 3-step process to <em>skyrocket</em> your business.
+	</SectionHead>
+	<ol>
+		{
+			steps.map((s) => (
+				<li>
+					<svg width="64" height="64" viewBox="0 0 64 64" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+						{s.icon === 'person' && (
+							<>
+								<path stroke="#fff" d="M12 52c0-6 4-10 10-10M22 30c-4-2-6-6-6-10 0-6 4-10 10-10s10 4 10 10" />
+								<path stroke="#ff4533" d="M18 14c0-6 6-8 10-8s8 2 8 8" />
+								<circle stroke="#ff4533" cx="42" cy="46" r="8" />
+								<path stroke="#ff4533" d="m48 52 6 6" />
+							</>
+						)}
+						{s.icon === 'window' && (
+							<>
+								<rect stroke="#fff" x="6" y="4" width="52" height="56" rx="4" />
+								<path stroke="#fff" d="M6 14h52" />
+								<circle stroke="#ff4533" cx="32" cy="37" r="8" />
+								<path stroke="#ff4533" d="M32 24v5M32 45v5M19 37h5M40 37h5" />
+							</>
+						)}
+						{s.icon === 'bag' && (
+							<>
+								<path stroke="#fff" d="M22 8h20l-4 10M22 8l4 10M26 18c-12 6-16 18-14 30 1 6 6 8 20 8s19-2 20-8c2-12-2-24-14-30" />
+								<path stroke="#ff4533" d="M32 32v18M37 36c-1-2-3-3-5-3-3 0-5 2-5 4s2 3 5 4 5 2 5 4-2 4-5 4c-2 0-4-1-5-3" />
+							</>
+						)}
+					</svg>
+					<h3>{s.title}</h3>
+					<p>{s.text}</p>
+				</li>
+			))
+		}
+	</ol>
+</section>
+
+<style>
+	.process {
+		padding-bottom: 96px;
+		scroll-margin-top: 80px;
+	}
+	ol {
+		display: grid;
+		grid-template-columns: repeat(3, 1fr);
+		gap: 48px;
+		max-width: 900px;
+		margin: 80px auto 0;
+		padding: 0;
+		list-style: none;
+	}
+	li {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: 16px;
+		text-align: center;
+	}
+	h3 {
+		margin-top: 8px;
+		font-size: 28px;
+		font-weight: 500;
+		letter-spacing: -0.03em;
+	}
+	p {
+		max-width: 230px;
+		color: var(--muted);
+		font-size: 18px;
+		line-height: 1.5;
+	}
+	@media (max-width: 809px) {
+		ol {
+			grid-template-columns: 1fr;
+			margin-top: 56px;
+		}
+	}
+</style>
