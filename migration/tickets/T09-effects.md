@@ -1,5 +1,5 @@
 # T09 [feature] Appear animations and logo ticker
-Status: open
+Status: done
 Blocked by: T05, T06, T07, T08
 
 Part of #1

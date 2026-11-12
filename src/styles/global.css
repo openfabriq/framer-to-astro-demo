@@ -107,3 +107,30 @@ p {
 		animation: none !important;
 	}
 }
+
+/* Appear effects (T09, decision 3). Opacity and transform only, so nothing moves the layout.
+   The first block of a page appears on load; the next ones as they enter the viewport, with
+   scroll-driven animations. A browser without them, or JavaScript off, or reduced motion, shows
+   everything at once: no text is ever hidden by default. */
+@keyframes appear {
+	from {
+		opacity: 0;
+		translate: 0 24px;
+	}
+	to {
+		opacity: 1;
+		translate: 0 0;
+	}
+}
+@media (prefers-reduced-motion: no-preference) {
+	main > :first-child {
+		animation: appear 0.7s cubic-bezier(0.44, 0, 0.56, 1) both;
+	}
+	@supports (animation-timeline: view()) {
+		main > :not(:first-child) {
+			animation: appear linear both;
+			animation-timeline: view();
+			animation-range: entry 0% entry 40%;
+		}
+	}
+}
