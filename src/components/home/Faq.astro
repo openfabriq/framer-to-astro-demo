@@ -1,0 +1,95 @@
+---
+// FAQ as native <details> (decision 3). Answers are read from the published page, where Framer renders
+// them on click. One item open at a time, as on the old site (shared `name`).
+const items = [
+	['How do you tailor Google Ads strategies for different businesses?', 'We customize Google Ads strategies based on individual business goals and industry dynamics, ensuring optimal performance and ROI.'],
+	["What's unique about your Meta Ads approach?", 'Our Meta Ads strategies leverage platform-specific features to maximize reach and engagement, distinguishing brands in crowded social media spaces.'],
+	['How do you ensure effective TikTok Ads targeting and engagement?', 'Our TikTok Ads expertise combines precise targeting techniques with creative content strategies to captivate audiences and drive meaningful interactions.'],
+	['How do you choose ad formats and placements across platforms?', 'We analyze audience behavior and platform trends to select the most effective ad formats and placements for each campaign, optimizing visibility and conversion potential.'],
+	['What reporting and analytics do you provide for ad campaign tracking?', 'We offer comprehensive reporting and analytics, providing actionable insights into campaign performance across Google, Meta, and TikTok platforms.'],
+	['Do you offer ongoing ad optimization and management services?', 'Yes, we provide continuous ad optimization and management to stay ahead of evolving trends and algorithms, ensuring sustained campaign success on Google, Meta, and TikTok.'],
+];
+---
+
+<section class="faq" id="faq" aria-label="Frequently asked questions">
+	{
+		items.map(([q, a]) => (
+			<details name="faq">
+				<summary>
+					<span>{q}</span>
+					<i aria-hidden="true" />
+				</summary>
+				<p>{a}</p>
+			</details>
+		))
+	}
+</section>
+
+<style>
+	.faq {
+		display: flex;
+		flex-direction: column;
+		gap: 16px;
+		max-width: 800px;
+		margin: 0 auto;
+		padding: 0 24px 96px;
+		scroll-margin-top: 80px;
+		box-sizing: content-box;
+	}
+	details {
+		border: 1px solid var(--line);
+		border-radius: 12px;
+		background: #0d0d0d;
+	}
+	summary {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 16px;
+		padding: 18px 20px;
+		font-size: 18px;
+		line-height: 1.5;
+		letter-spacing: -0.02em;
+		cursor: pointer;
+		list-style: none;
+	}
+	summary::-webkit-details-marker {
+		display: none;
+	}
+	p {
+		margin: 0;
+		padding: 0 20px 20px;
+		font-size: 16px;
+		line-height: 1.6;
+		color: rgba(255, 255, 255, 0.7);
+	}
+	i {
+		position: relative;
+		flex: none;
+		width: 14px;
+		height: 14px;
+	}
+	i::before,
+	i::after {
+		content: '';
+		position: absolute;
+		background: #fff;
+		transition: transform 0.2s;
+	}
+	i::before {
+		inset: 6px 0 auto;
+		height: 2px;
+	}
+	i::after {
+		inset: 0 auto 0 6px;
+		width: 2px;
+	}
+	details[open] i::after {
+		transform: scaleY(0);
+	}
+	@media (max-width: 809px) {
+		summary {
+			font-size: 16px;
+		}
+	}
+</style>

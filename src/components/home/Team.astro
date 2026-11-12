@@ -1,0 +1,106 @@
+---
+// "Meet the incredible team": four portrait cards (they link to LinkedIn on the Framer page).
+// The side-scrolling movement is T09's; here the row scrolls by hand when it does not fit.
+import { Image } from 'astro:assets';
+import SectionHead from './SectionHead.astro';
+import m1 from '../../assets/images/nH8XKwwz1lIuO90t93Et6aUgxU.png';
+import m2 from '../../assets/images/ORlX1reznkEFWuS1wNveq5fNFFE.png';
+import m3 from '../../assets/images/lTKaM2EAlBlgQcH2Sw5ltOovuo.png';
+import m4 from '../../assets/images/4r19SpAS2J6PS1Fuuw1J8qDU8.png';
+
+const team = [
+	{ name: 'James Dunn', role: 'Founder of Conversion', photo: m1 },
+	{ name: 'Ayesha Dune', role: 'Head of Sales', photo: m2 },
+	{ name: 'Joshua Brown', role: 'Social Media Executive', photo: m3 },
+	{ name: 'Crystal Lane', role: 'Head of Marketing', photo: m4 },
+];
+---
+
+<section class="team container" id="team">
+	<SectionHead badge="Team" sub="We pride ourselves of being the best of the best and our team encapsulates that.">
+		Meet the <em>incredible</em> team.
+	</SectionHead>
+	<a class="button large" href="https://cal.com" target="_blank" rel="noopener">Book a 15-min call</a>
+	<ul>
+		{
+			team.map((m) => (
+				<li>
+					<a href="https://linkedin.com" target="_blank" rel="noopener">
+						<Image src={m.photo} alt="" width={760} loading="eager" />
+						<span class="info">
+							<span class="name">{m.name}</span>
+							<span class="role">{m.role}</span>
+						</span>
+					</a>
+				</li>
+			))
+		}
+	</ul>
+</section>
+
+<style>
+	.team {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		padding-bottom: 96px;
+		scroll-margin-top: 80px;
+	}
+	.button {
+		margin-top: 32px;
+		padding: 12px 18px;
+	}
+	ul {
+		display: flex;
+		justify-content: safe center;
+		gap: 24px;
+		width: 100%;
+		margin: 64px 0 0;
+		padding: 0;
+		overflow-x: auto;
+		list-style: none;
+	}
+	li {
+		flex: 0 0 380px;
+	}
+	li a {
+		position: relative;
+		display: block;
+		height: 400px;
+		overflow: hidden;
+		border: 1px solid var(--line);
+		border-radius: 24px;
+	}
+	li a :global(img) {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+	}
+	.info {
+		position: absolute;
+		inset: auto 0 0;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: 4px;
+		padding: 48px 16px 24px;
+		background: linear-gradient(to top, rgb(0 0 0 / 0.85), transparent);
+	}
+	.name {
+		font-size: 28px;
+		font-weight: 500;
+		letter-spacing: -0.03em;
+	}
+	.role {
+		color: var(--muted);
+		font-size: 16px;
+	}
+	@media (max-width: 809px) {
+		li {
+			flex-basis: 300px;
+		}
+		li a {
+			height: 360px;
+		}
+	}
+</style>

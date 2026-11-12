@@ -1,0 +1,99 @@
+---
+// "There's a reason people are raving about us": six quotes in a grid (the slider above is Testimonials).
+import { Image } from 'astro:assets';
+import SectionHead from './SectionHead.astro';
+import p1 from '../../assets/images/RnlZlUp5GcLVlfS43Q4nd6kA9c.jpg';
+import p2 from '../../assets/images/5P0eN6qtSxQg8Lrk6rw2GR9e7eI.jpg';
+import p3 from '../../assets/images/G1bC6MQnKLl8c7ZyjwpJlVGuw.jpg';
+import p4 from '../../assets/images/oUkBi1c8nERocfQrJWNLxZ9Fipw.jpg';
+import p5 from '../../assets/images/kIBiy2xM79Ac692vRBBeMc3YFw8.jpg';
+import p6 from '../../assets/images/X69CSaL5GOIA9ZgjxkdlXWjG7w.jpg';
+
+const reviews = [
+	{ quote: "Conversion transformed our business overnight. From stale oragnic growth to explosive growth with Google Ads and it's scaling everyday.", name: 'Jonathan Day', role: 'Co-founder of Monday', photo: p1 },
+	{ quote: "We never realised the power of paid advertising until we found Conversion. It's doubled our revenue in just a few months, absolutely incredible.", name: 'Melissa Reid', role: 'Founder of Tuesday', photo: p2 },
+	{ quote: 'Conversion turned our marketing game around! With their paid advertising strategies, we saw a remarkable boost in sales that we never thought possible.', name: 'Chris Wright', role: 'CEO of Wednesday', photo: p3 },
+	{ quote: 'Before discovering Conversion, we were hesitant about investing in paid advertising, but the team proved us wrong with their incredible results.', name: 'Terri Williams', role: 'Founder of Thursday', photo: p4 },
+	{ quote: 'Conversion exceeded our expectations! Their approach to paid advertising is unparalleled, resulting in a substantial growth in our revenue stream.', name: 'Belinda Meyers', role: 'COO of Friday', photo: p5 },
+	{ quote: 'Thanks to Conversion, our business experienced a remarkable turnaround. Their expertise in paid advertising tripled our revenuein record time.', name: 'Sarah Yanna', role: 'Director of Saturday', photo: p6 },
+];
+---
+
+<section class="reviews container" id="testimonials">
+	<SectionHead badge="Testimonials">There's a reason people are <em>raving</em> about us.</SectionHead>
+	<ul>
+		{
+			reviews.map((r) => (
+				<li>
+					<blockquote>"{r.quote}"</blockquote>
+					<div class="who">
+						<Image src={r.photo} alt="" width={64} height={64} loading="eager" />
+						<div>
+							<p class="name">{r.name}</p>
+							<p class="role">{r.role}</p>
+						</div>
+					</div>
+				</li>
+			))
+		}
+	</ul>
+</section>
+
+<style>
+	.reviews {
+		padding-bottom: 96px;
+		scroll-margin-top: 80px;
+	}
+	ul {
+		display: grid;
+		grid-template-columns: repeat(3, 1fr);
+		gap: 24px;
+		margin: 64px 0 0;
+		padding: 0;
+		list-style: none;
+	}
+	li {
+		display: flex;
+		flex-direction: column;
+		justify-content: space-between;
+		gap: 24px;
+		padding: 24px;
+		border: 1px solid var(--line);
+		border-radius: 24px;
+		background: #0d0d0d;
+	}
+	blockquote {
+		margin: 0;
+		color: var(--muted);
+		font-size: 16px;
+		line-height: 1.4;
+	}
+	.who {
+		display: flex;
+		align-items: center;
+		gap: 12px;
+	}
+	.who :global(img) {
+		width: 32px;
+		height: 32px;
+		border-radius: 50%;
+		object-fit: cover;
+	}
+	.name {
+		font-size: 14px;
+	}
+	.role {
+		color: var(--muted);
+		font-size: 12px;
+	}
+	@media (max-width: 1199px) {
+		ul {
+			grid-template-columns: repeat(2, 1fr);
+		}
+	}
+	@media (max-width: 809px) {
+		ul {
+			grid-template-columns: 1fr;
+		}
+	}
+</style>

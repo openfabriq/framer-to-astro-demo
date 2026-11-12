@@ -1,0 +1,100 @@
+---
+// "How can we help you?": Meta, Google and TikTok cards. The 4 "Video" layers of the Framer page are
+// gradient glows behind these cards (and the hero): they are not rebuilt as videos (T05, decision 2:
+// glows approximated), so the cards use CSS gradients.
+import SectionHead from './SectionHead.astro';
+
+const services = [
+	{ name: 'Meta Ads', text: 'Our team has decades of combined experience creating winning Facebook & Instagram campaigns.', glow: 'tl' },
+	{ name: 'Google Ads', text: 'Put your products in front of active buyers and beat out the competition with expert Google Shopping services.', glow: 'tr' },
+	{ name: 'TikTok Ads', text: 'With over 800 million monthly users in the US, TikTok is the strongest link between your brand and the next generation.', glow: 'wide' },
+];
+---
+
+<section class="services container" id="services">
+	<SectionHead
+		badge="Services"
+		sub="From Google ads, to Meta ads, to TikTok ads, and even content creation, we've got you covered on everything front."
+	>
+		How can we help <em>you?</em>
+	</SectionHead>
+	<ul>
+		{
+			services.map((s) => (
+				<li class={s.glow}>
+					<h3>{s.name}</h3>
+					<p>{s.text}</p>
+				</li>
+			))
+		}
+	</ul>
+</section>
+
+<style>
+	.services {
+		padding-bottom: 96px;
+		scroll-margin-top: 80px;
+	}
+	ul {
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		gap: 16px;
+		max-width: 1000px;
+		margin: 64px auto 0;
+		padding: 0;
+		list-style: none;
+	}
+	li {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		gap: 24px;
+		min-height: 212px;
+		padding: 32px 64px;
+		border: 1px solid var(--line);
+		border-radius: 24px;
+		background: #0d0d0d;
+		text-align: center;
+	}
+	li.wide {
+		grid-column: 1 / -1;
+		min-height: 234px;
+	}
+	li.tl {
+		background:
+			radial-gradient(ellipse 60% 70% at 0% 0%, rgb(30 130 220 / 0.9), transparent 70%), #0d0d0d;
+	}
+	li.tr {
+		background:
+			radial-gradient(ellipse 60% 70% at 100% 0%, rgb(220 80 40 / 0.85), transparent 70%), #0d0d0d;
+	}
+	li.wide {
+		background:
+			radial-gradient(ellipse 40% 70% at 0% 100%, rgb(220 80 40 / 0.85), transparent 70%),
+			radial-gradient(ellipse 40% 70% at 100% 0%, rgb(30 130 220 / 0.9), transparent 70%), #0d0d0d;
+	}
+	h3 {
+		font-size: 44px;
+		font-weight: 500;
+		line-height: 1.1;
+		letter-spacing: -0.04em;
+	}
+	p {
+		max-width: 360px;
+		color: var(--muted);
+		font-size: 15px;
+		line-height: 1.4;
+	}
+	@media (max-width: 809px) {
+		ul {
+			grid-template-columns: 1fr;
+		}
+		li {
+			padding: 32px 24px;
+		}
+		h3 {
+			font-size: 36px;
+		}
+	}
+</style>

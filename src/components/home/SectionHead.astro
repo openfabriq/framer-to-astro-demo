@@ -1,0 +1,62 @@
+---
+// Badge, h2 and lead paragraph that open each home section. `title` may hold one <em> for the serif word.
+interface Props {
+	badge: string;
+	sub?: string;
+}
+const { badge, sub } = Astro.props;
+---
+
+<div class="head">
+	<span class="badge">{badge}</span>
+	<h2><slot /></h2>
+	{sub && <p class="sub">{sub}</p>}
+</div>
+
+<style>
+	.head {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		text-align: center;
+	}
+	.badge {
+		padding: 8px 16px;
+		border: 1px solid var(--line);
+		border-radius: 12px;
+		background: #111;
+	}
+	h2 {
+		margin-top: 24px;
+		max-width: 760px;
+		font-size: 64px;
+		line-height: 1.15;
+		letter-spacing: -0.05em;
+		font-weight: 500;
+	}
+	h2 :global(em) {
+		font-family: var(--font-serif);
+		font-weight: 400;
+		letter-spacing: -0.03em;
+	}
+	.sub {
+		max-width: 620px;
+		margin-top: 24px;
+		color: var(--muted);
+		font-size: 18px;
+		line-height: 1.7;
+	}
+	@media (max-width: 1199px) {
+		h2 {
+			font-size: 52px;
+		}
+	}
+	@media (max-width: 809px) {
+		h2 {
+			font-size: 36px;
+		}
+		.sub {
+			font-size: 16px;
+		}
+	}
+</style>

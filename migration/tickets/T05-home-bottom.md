@@ -1,5 +1,5 @@
 # T05 [template] Home, second half: services, comparison, process, FAQ, team
-Status: open
+Status: done
 Blocked by: T04
 
 Part of #1
