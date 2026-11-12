@@ -11,8 +11,22 @@ can:
   # A low-risk change of the site's own files merges alone; never .github/ nor openfabriq/.
   - merge_pull_request:
       labels: ["risk:low"]
-      paths: ["src/**", "public/**", "scripts/**", "tests/**", "evidence/**", "migration/**", "package.json", "pnpm-lock.yaml", "astro.config.*", "tsconfig.json", ".gitignore"]
-      except_paths: ["migration/decisions.md"] # a decision changes only through a person
+      only_paths:
+        # the site
+        - "src/**"
+        - "public/**"
+        - "scripts/**"
+        # its settings
+        - "package.json"
+        - "pnpm-lock.yaml"
+        - "astro.config.*"
+        - "tsconfig.json"
+        - ".gitignore"
+        # the evidence and the migration tracking
+        - "evidence/**"
+        - "migration/tickets/**"
+        - "migration/parity/**"
+        - "migration/samples/**"
 ---
 Check this pull request against the old site for the URLs of its ticket, and post the parity table.
 

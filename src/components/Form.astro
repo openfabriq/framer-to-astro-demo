@@ -1,0 +1,232 @@
+---
+import { FORM_ENDPOINT, type FormField } from '../lib/forms';
+
+interface Props {
+	/** Sent with the values, so one destination serves every form. */
+	name: string;
+	fields: FormField[];
+	submit: string;
+	success: string;
+	/** `newsletter`: one line, the field beside the button, no labels. */
+	variant?: 'newsletter' | 'contact';
+}
+const { name, fields, submit, success, variant = 'contact' } = Astro.props;
+---
+
+<form
+	class={`form ${variant}`}
+	method="post"
+	data-form={name}
+	data-endpoint={FORM_ENDPOINT}
+	data-success={success}
+>
+	<div class="fields">
+		{
+			fields.map((f) => (
+				<label class:list={['field', f.half && 'half']}>
+					{f.label && <span class="label">{f.label}</span>}
+					{f.type === 'textarea' ? (
+						<textarea name={f.name} placeholder={f.placeholder} required={f.required} aria-label={f.label} />
+					) : (
+						<input
+							type={f.type ?? 'text'}
+							name={f.name}
+							placeholder={f.placeholder}
+							required={f.required}
+							aria-label={f.label ?? f.placeholder}
+							autocomplete={f.type === 'email' ? 'email' : undefined}
+						/>
+					)}
+				</label>
+			))
+		}
+	</div>
+	<input class="hp" type="text" name="hp" tabindex="-1" autocomplete="off" aria-hidden="true" />
+	{
+		variant === 'newsletter' ? (
+			<input type="submit" class="submit" value={submit} />
+		) : (
+			<button type="submit" class="submit">{submit}</button>
+		)
+	}
+	<p class="status" role="status" aria-live="polite" hidden></p>
+</form>
+
+<style>
+	.form {
+		display: flex;
+		gap: 10px;
+		position: relative;
+	}
+	.fields {
+		display: contents;
+	}
+	.field {
+		display: flex;
+		flex-direction: column;
+		gap: 10px;
+		min-width: 0;
+	}
+	.label {
+		font-size: 14px;
+		line-height: 17px;
+	}
+	input:not(.hp):not(.submit),
+	textarea {
+		width: 100%;
+		padding: 16px;
+		border: 0;
+		border-radius: 12px;
+		background: #111;
+		color: rgb(252 252 250);
+		font: inherit;
+		font-size: 14px;
+		line-height: 17px;
+		outline: 1px solid transparent;
+		transition: outline-color 0.2s;
+	}
+	textarea {
+		min-height: 100px;
+		resize: vertical;
+	}
+	::placeholder {
+		color: rgb(252 252 250 / 0.4);
+	}
+	input:not(.hp):not(.submit):focus-visible,
+	textarea:focus-visible {
+		outline-color: var(--accent);
+	}
+	.form:global(.was-validated) :is(input, textarea):invalid {
+		outline-color: #ff4533;
+	}
+	.hp {
+		position: absolute;
+		width: 1px;
+		height: 1px;
+		opacity: 0;
+		pointer-events: none;
+	}
+	.submit {
+		padding: 16px;
+		border: 0;
+		border-radius: 12px;
+		background: var(--accent);
+		color: #fff;
+		font: inherit;
+		cursor: pointer;
+		transition: filter 0.2s;
+	}
+	.submit:hover {
+		filter: brightness(1.12);
+	}
+	.submit:disabled {
+		opacity: 0.6;
+		cursor: progress;
+	}
+	.status {
+		font-size: 14px;
+		line-height: 20px;
+	}
+	.status[data-state='error'] {
+		color: #ff7a6b;
+	}
+	.status[data-state='success'] {
+		color: #7be495;
+	}
+
+	.contact {
+		flex-direction: column;
+		gap: 24px;
+		width: 100%;
+		max-width: 800px;
+	}
+	.contact .fields {
+		display: flex;
+		flex-direction: column;
+		gap: 24px;
+	}
+	.contact .field {
+		gap: 10px;
+	}
+	.contact .submit {
+		width: 100%;
+		font-size: 16px;
+	}
+	@media (min-width: 810px) {
+		.contact .fields {
+			flex-direction: row;
+			flex-wrap: wrap;
+		}
+		.contact .field {
+			flex: 1 1 100%;
+		}
+		.contact .field.half {
+			flex-basis: calc(50% - 12px);
+		}
+	}
+
+	.newsletter {
+		flex-direction: row;
+		flex-wrap: wrap;
+	}
+	.newsletter .field {
+		flex: 1 1 0;
+	}
+	.newsletter input:not(.hp):not(.submit) {
+		padding: 12px 16px;
+		font-size: 16px;
+		line-height: 24px;
+	}
+	.newsletter .submit {
+		padding: 12px 16px;
+		font-size: 16px;
+		line-height: 24px;
+	}
+	.newsletter .status {
+		flex-basis: 100%;
+	}
+</style>
+
+<script>
+	import { failureMessage, payload } from '../lib/forms';
+
+	// Progressive enhancement: without JavaScript the form posts as a plain HTML form.
+	document.querySelectorAll<HTMLFormElement>('form[data-form]').forEach((form) => {
+		const status = form.querySelector<HTMLElement>('.status')!;
+		const button = form.querySelector<HTMLButtonElement | HTMLInputElement>('.submit')!;
+		const show = (state: 'success' | 'error', text: string) => {
+			status.textContent = text;
+			status.dataset.state = state;
+			status.hidden = false;
+		};
+		form.addEventListener('submit', async (event) => {
+			event.preventDefault();
+			form.classList.add('was-validated');
+			if (!form.checkValidity()) {
+				form.reportValidity();
+				return;
+			}
+			const data = new FormData(form);
+			// A filled honeypot is a robot: look like a success and send nothing.
+			if (data.get('hp')) return show('success', form.dataset.success!);
+			const endpoint = form.dataset.endpoint ?? '';
+			if (!endpoint) return show('error', failureMessage(endpoint));
+			button.disabled = true;
+			try {
+				const res = await fetch(endpoint, {
+					method: 'POST',
+					headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+					body: JSON.stringify(payload(form.dataset.form!, data)),
+				});
+				if (!res.ok) return show('error', failureMessage(endpoint, res.status));
+				form.reset();
+				form.classList.remove('was-validated');
+				show('success', form.dataset.success!);
+			} catch {
+				show('error', failureMessage(endpoint));
+			} finally {
+				button.disabled = false;
+			}
+		});
+	});
+</script>
