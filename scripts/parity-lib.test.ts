@@ -1,5 +1,5 @@
 import { expect, test } from 'vitest';
-import { diffLists, heightGap, linksOf, parseHead, textLines, withoutOrigin } from './parity-lib.mjs';
+import { diffLists, heightGap, linksOf, parseHead, parityFiles, pickPages, textLines, withoutOrigin } from './parity-lib.mjs';
 
 const origins = ['https://old.test', 'http://localhost:4322'];
 
@@ -28,4 +28,19 @@ test('diffLists counts repeats', () => {
 
 test('heightGap is relative to the old height', () => {
 	expect(heightGap(2000, 2100)).toBeCloseTo(0.05);
+});
+
+test('parityFiles compares the files named, else the ones the branch changes, else all', () => {
+	const files = ['T01.json', 'T05.json', 'T09.json'];
+	expect(parityFiles(files, ['T09.json'], [])).toEqual(['T09.json']);
+	expect(parityFiles(files, ['T09.json'], ['T05'])).toEqual(['T05.json']);
+	expect(parityFiles(files, ['T09.json'], ['--all'])).toEqual(files);
+	// On the default branch, or a branch that changes no parity file: every page.
+	expect(parityFiles(files, [], [])).toEqual(files);
+});
+
+test('pickPages keeps the pages of the files, or only the paths named', () => {
+	const pages = [{ path: '/' }, { path: '/about' }];
+	expect(pickPages(pages, [])).toEqual(pages);
+	expect(pickPages(pages, ['/about', 'T05'])).toEqual([{ path: '/about' }]);
 });

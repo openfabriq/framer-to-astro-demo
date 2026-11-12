@@ -81,3 +81,21 @@ export function diffLists(old, next) {
 
 /** Relative difference of two heights, `0.05` for 5 %. */
 export const heightGap = (old, next) => Math.abs(next - old) / old;
+
+/**
+ * The parity files to compare: those `args` name (`T05`), all with `--all`, else those the branch
+ * changes (a ticket's own), else all (the default branch, or a branch that changes none).
+ */
+export function parityFiles(files, changed, args) {
+	if (args.includes('--all')) return files;
+	const named = args.filter((a) => /^T\d+/.test(a));
+	if (named.length) return files.filter((f) => named.some((n) => f.startsWith(n)));
+	const own = files.filter((f) => changed.includes(f));
+	return own.length ? own : files;
+}
+
+/** The pages to compare: all of the chosen files, or only the paths `args` name (`/about`). */
+export function pickPages(pages, args) {
+	const paths = args.filter((a) => a.startsWith('/'));
+	return paths.length ? pages.filter((p) => paths.includes(p.path)) : pages;
+}

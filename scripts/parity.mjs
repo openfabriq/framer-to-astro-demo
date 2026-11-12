@@ -2,11 +2,15 @@
 //   per page: title, description, canonical, h1, links (from the HTML);
 //   per breakpoint (1200, 810, 390 px): rendered text and page height (from a browser: agent-browser).
 // Screenshots of both sites go to parity-report/. The Astro pages are read from `dist/` (run `pnpm build` first).
+// Which pages: `pnpm parity T05` or `pnpm parity /about` names them, `pnpm parity --all` takes every
+// page; with nothing named, the pages of the parity files this branch changes (its ticket's), else all.
+// The old site does not change during the migration: its measures are kept a day in parity-report/old/,
+// in this copy of the repository, so a second run of parity in the same run is quick (`--fresh` measures again).
 import { spawn, execFileSync } from 'node:child_process';
-import { existsSync, mkdirSync, readdirSync, readFileSync, writeFileSync } from 'node:fs';
+import { copyFileSync, existsSync, mkdirSync, readdirSync, readFileSync, statSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
-import { join } from 'node:path';
-import { diffLists, heightGap, linksOf, parseHead, textLines, withoutOrigin } from './parity-lib.mjs';
+import { join, resolve } from 'node:path';
+import { diffLists, heightGap, linksOf, parityFiles, parseHead, pickPages, textLines, withoutOrigin } from './parity-lib.mjs';
 
 const OLD = (process.env.LEGACY_SITE_URL ?? 'https://conversion.framer.media').replace(/\/$/, '');
 const PORT = 4322;
@@ -18,12 +22,31 @@ const REPORT = 'parity-report';
 
 process.env.AGENT_BROWSER_SOCKET_DIR ??= join(process.env.TMPDIR ?? tmpdir(), 'agent-browser');
 
+const args = process.argv.slice(2);
 const files = existsSync('migration/parity')
 	? readdirSync('migration/parity').filter((f) => /^T\d+.*\.json$/.test(f))
 	: [];
-const pages = files.flatMap((f) =>
-	JSON.parse(readFileSync(join('migration/parity', f), 'utf8')).pages.map((p) => ({ ...p, ticket: f })),
+// The parity files the branch changes against the default branch, committed or not.
+const git = (...a) => execFileSync('git', a, { encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'] }).trim();
+let changed = [];
+try {
+	let base = 'origin/main';
+	try {
+		base = git('symbolic-ref', '-q', '--short', 'refs/remotes/origin/HEAD');
+	} catch {}
+	const since = git('merge-base', 'HEAD', base);
+	changed = [git('diff', '--name-only', since, '--', 'migration/parity'), git('ls-files', '--others', '--exclude-standard', '--', 'migration/parity')]
+		.join('\n')
+		.split('\n')
+		.filter(Boolean)
+		.map((f) => f.split('/').pop());
+} catch {}
+const chosen = parityFiles(files, changed, args);
+const pages = pickPages(
+	chosen.flatMap((f) => JSON.parse(readFileSync(join('migration/parity', f), 'utf8')).pages.map((p) => ({ ...p, ticket: f }))),
+	args,
 );
+console.log(`parity: ${pages.length} page(s) of ${chosen.join(', ') || 'no file'}${chosen.length < files.length ? ' (`pnpm parity --all` for every page)' : ''}`);
 if (pages.length === 0) {
 	console.log('parity: no page listed in migration/parity/, nothing to compare.');
 	process.exit(0);
@@ -33,9 +56,47 @@ if (!existsSync('dist')) {
 	process.exit(1);
 }
 
-const browser = (...args) => {
-	const out = execFileSync('agent-browser', ['--json', ...args], { encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'] });
-	return JSON.parse(out).data;
+const browser = (...a) => {
+	const out = execFileSync('agent-browser', ['--json', ...a], { encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'] });
+	const r = JSON.parse(out);
+	return r.result ?? r.data;
+};
+// One page at one width in one call: one agent-browser process instead of five.
+const measure = (url, width, shot) => {
+	const steps = [
+		['set', 'viewport', String(width), '900'],
+		['open', url],
+		['wait', '--load', 'load'],
+		['wait', '400'],
+		['eval', PROBE],
+		['screenshot', '--full', resolve(shot)],
+	];
+	const out = execFileSync('agent-browser', ['--json', 'batch', '--bail'], {
+		input: JSON.stringify(steps),
+		encoding: 'utf8',
+		stdio: ['pipe', 'pipe', 'ignore'],
+		maxBuffer: 64 * 1024 * 1024,
+	});
+	const results = JSON.parse(out);
+	const failed = results.find((r) => !r.success);
+	if (failed) throw new Error(`agent-browser ${failed.command.join(' ')}: ${failed.error}`);
+	const value = results[4].result?.result ?? results[4].result;
+	return JSON.parse(typeof value === 'string' ? value : JSON.stringify(value));
+};
+const OLD_CACHE = join(REPORT, 'old');
+const DAY = 24 * 3600 * 1000;
+// The old site's measure, kept a day: it does not change during the migration.
+const measureOld = (path, width, shot) => {
+	const kept = join(OLD_CACHE, `${slug(path)}-${width}`);
+	if (!args.includes('--fresh') && existsSync(`${kept}.json`) && existsSync(`${kept}.png`) && Date.now() - statSync(`${kept}.json`).mtimeMs < DAY) {
+		copyFileSync(`${kept}.png`, shot);
+		return JSON.parse(readFileSync(`${kept}.json`, 'utf8'));
+	}
+	const seen = measure(OLD + path, width, shot);
+	mkdirSync(OLD_CACHE, { recursive: true });
+	writeFileSync(`${kept}.json`, JSON.stringify(seen));
+	copyFileSync(shot, `${kept}.png`);
+	return seen;
 };
 const PROBE = `JSON.stringify({ height: document.documentElement.scrollHeight, text: document.body.innerText })`;
 const slug = (path) => (path === '/' ? 'home' : path.replace(/^\//, '').replace(/\W+/g, '-'));
@@ -110,13 +171,9 @@ for (const page of pages) {
 
 	for (const width of WIDTHS) {
 		const seen = {};
-		for (const [name, origin] of [['old', OLD], ['new', NEW]]) {
-			browser('set', 'viewport', String(width), '900');
-			browser('open', origin + page.path);
-			browser('wait', '1200');
-			seen[name] = JSON.parse(browser('eval', PROBE).result);
-			browser('screenshot', '--full', join(REPORT, `${slug(page.path)}-${name}-${width}.png`));
-		}
+		const shot = (name) => join(REPORT, `${slug(page.path)}-${name}-${width}.png`);
+		seen.old = measureOld(page.path, width, shot('old'));
+		seen.new = measure(NEW + page.path, width, shot('new'));
 		// The closed hamburger menu of the old site is still in its rendered text below 1200px.
 		const ignore = [...(page.ignoreText ?? []), ...(width < 1200 ? (page.ignoreTextBelow1200 ?? []) : [])];
 		const text = diffLists(textLines(seen.old.text, ignore), textLines(seen.new.text, ignore));
