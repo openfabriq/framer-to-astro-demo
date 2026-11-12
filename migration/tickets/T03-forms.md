@@ -1,5 +1,5 @@
 # T03 [feature] Forms: newsletter and contact
-Status: open
+Status: done
 Blocked by: T01
 
 Part of #1

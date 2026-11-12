@@ -1,5 +1,6 @@
 ---
 import Logo from './Logo.astro';
+import Form from './Form.astro';
 import avatar from '../assets/images/OeUMJwP5hOLQ8dVue2LqSYO5os.jpg';
 import { Image } from 'astro:assets';
 
@@ -32,8 +33,13 @@ const info = [
 					Sign up to our mailing list below and be the first to know about new updates. Don't worry, we hate spam
 					too.
 				</p>
-				<!-- The newsletter form is T03's: it goes in this slot. -->
-				<slot name="newsletter" />
+				<Form
+					name="newsletter"
+					variant="newsletter"
+					fields={[{ name: 'email', type: 'email', placeholder: 'Your Email Address' }]}
+					submit="Get Notified"
+					success="Thanks for signing up!"
+				/>
 			</div>
 		</div>
 		<div class="columns">
