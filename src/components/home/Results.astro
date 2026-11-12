@@ -73,14 +73,15 @@ const cases = [
 		display: flex;
 		gap: 24px;
 		width: 100%;
+		overflow-x: auto;
 		margin: 64px 0 0;
 		padding: 0;
 		list-style: none;
 	}
 	li {
 		position: relative;
-		flex: 1 1 0;
-		aspect-ratio: 380 / 500;
+		flex: 0 0 380px;
+		height: 400px;
 		overflow: hidden;
 		border-radius: 24px;
 		background: #0d0d0d;
@@ -103,7 +104,7 @@ const cases = [
 		background: linear-gradient(to top, rgb(0 0 0 / 0.75), transparent);
 	}
 	h3 {
-		font-size: 24px;
+		font-size: 28px;
 		font-weight: 500;
 		line-height: 1.2;
 	}
@@ -114,7 +115,12 @@ const cases = [
 		display: flex;
 		gap: 12px;
 		color: var(--muted);
-		font-size: 12px;
+		font-size: 14px;
+	}
+	.stats span {
+		padding: 4px 10px;
+		border-radius: 12px;
+		background: rgb(13 13 13 / 0.56);
 	}
 	@media (max-width: 1199px) {
 		h2 {
@@ -127,12 +133,6 @@ const cases = [
 		}
 		.sub {
 			font-size: 16px;
-		}
-		ul {
-			flex-direction: column;
-		}
-		li {
-			flex: none;
 		}
 	}
 </style>
