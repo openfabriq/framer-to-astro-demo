@@ -1,0 +1,156 @@
+---
+// One service: description and bullet list next to a "Project Investment" card.
+import { Image } from 'astro:assets';
+
+interface Props {
+	title: string;
+	text: string;
+	items: string[];
+	image: ImageMetadata;
+	price: string;
+	/** Card on the left on desktop and tablet. */
+	flip?: boolean;
+}
+const { title, text, items, image, price, flip = false } = Astro.props;
+---
+
+<section class:list={['service', 'container', { flip }]}>
+	<div class="info">
+		<h2>{title}</h2>
+		<p class="text">{text}</p>
+		<h3>What's included?</h3>
+		<ul>
+			{items.map((i) => <li><span aria-hidden="true">•</span>{i}</li>)}
+		</ul>
+	</div>
+	<div class="card">
+		<Image src={image} alt="" widths={[390, 568, 1136]} sizes="(min-width: 1200px) 568px, 100vw" />
+		<div class="invest">
+			<h4>Project Investment</h4>
+			<p>{price}</p>
+			<a class="button" href="/contact">Book a call</a>
+		</div>
+	</div>
+</section>
+
+<style>
+	.service {
+		display: flex;
+		flex-direction: column;
+		gap: 32px;
+		padding-bottom: 64px;
+	}
+	.info {
+		display: flex;
+		flex-direction: column;
+		gap: 16px;
+	}
+	h2 {
+		font-size: 48px;
+		line-height: 54px;
+		font-weight: 500;
+		letter-spacing: -0.04em;
+	}
+	.text {
+		color: var(--muted);
+		font-size: 16px;
+		line-height: 1.5;
+	}
+	h3 {
+		margin-top: 8px;
+		font-size: 24px;
+		line-height: 30px;
+		font-weight: 500;
+		letter-spacing: -0.03em;
+	}
+	ul {
+		display: flex;
+		flex-direction: column;
+		gap: 10px;
+		margin: 0;
+		padding: 0;
+		list-style: none;
+		font-size: 14px;
+		line-height: 1.5;
+	}
+	li {
+		position: relative;
+		padding-left: 14px;
+	}
+	li span {
+		position: absolute;
+		left: 0;
+		color: var(--muted);
+	}
+	.card {
+		overflow: hidden;
+		border: 1px solid var(--line);
+		border-radius: 12px;
+		background: rgb(13 13 13);
+	}
+	.card :global(img) {
+		display: block;
+		width: 100%;
+		height: auto;
+		aspect-ratio: 1;
+		object-fit: cover;
+		background: #000;
+	}
+	.invest {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: 16px;
+		padding: 32px 24px;
+		text-align: center;
+	}
+	h4 {
+		margin: 0;
+		font-size: 24px;
+		line-height: 30px;
+		font-weight: 500;
+		letter-spacing: -0.03em;
+	}
+	.invest p {
+		max-width: 400px;
+		color: var(--muted);
+		font-size: 14px;
+		line-height: 1.5;
+	}
+	@media (min-width: 810px) {
+		.service {
+			gap: 40px;
+			padding-bottom: 80px;
+		}
+		.card :global(img) {
+			aspect-ratio: 1.5;
+		}
+		h2 {
+			font-size: 48px;
+			line-height: 54px;
+		}
+	}
+	@media (min-width: 1200px) {
+		.service {
+			flex-direction: row;
+			align-items: flex-start;
+			gap: 64px;
+			padding-bottom: 168px;
+		}
+		.service.flip {
+			flex-direction: row-reverse;
+		}
+		.card :global(img) {
+			aspect-ratio: 2 / 1;
+		}
+		.info,
+		.card {
+			flex: 1 1 0;
+			min-width: 0;
+		}
+		h2 {
+			font-size: 44px;
+			line-height: 50px;
+		}
+	}
+</style>
