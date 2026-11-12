@@ -8,10 +8,11 @@ import c5 from '../../assets/logos/client-5.svg?raw';
 import c6 from '../../assets/logos/client-6.svg?raw';
 
 const logos = [c1, c2, c3, c4, c5, c6];
+const { title = "You're in good hands:" } = Astro.props;
 ---
 
 <section class="clients container" id="clients-logos">
-	<p>You're in good hands:</p>
+	<p>{title}</p>
 	<ul aria-hidden="true">
 		{logos.map((svg) => <li set:html={svg} />)}
 	</ul>

@@ -1,0 +1,111 @@
+---
+// "On a professional / personal note": a picture next to a title and three short points.
+import { Image } from 'astro:assets';
+
+interface Props {
+	image: ImageMetadata;
+	alt: string;
+	/** Picture on the right on desktop and tablet. */
+	flip?: boolean;
+	points: { title: string; text: string }[];
+}
+const { image, alt, flip = false, points } = Astro.props;
+---
+
+<section class:list={['note', 'container', { flip }]}>
+	<Image src={image} {alt} widths={[390, 568, 1136]} sizes="(min-width: 1200px) 568px, 100vw" />
+	<div class="text">
+		<h2><slot /></h2>
+		<div class="points">
+			{
+				points.map((p) => (
+					<div>
+						<h3>{p.title}</h3>
+						<p>{p.text}</p>
+					</div>
+				))
+			}
+		</div>
+	</div>
+</section>
+
+<style>
+	.note {
+		display: flex;
+		flex-direction: column;
+		gap: 32px;
+		padding-bottom: 64px;
+	}
+	.note :global(img) {
+		width: 100%;
+		height: auto;
+		aspect-ratio: 1.02;
+		object-fit: cover;
+		border: 1px solid var(--line);
+		border-radius: 16px;
+	}
+	.text {
+		display: flex;
+		flex-direction: column;
+		gap: 24px;
+	}
+	h2 {
+		font-size: 40px;
+		line-height: 46px;
+		font-weight: 500;
+		letter-spacing: -0.04em;
+	}
+	.points {
+		display: flex;
+		flex-direction: column;
+		gap: 24px;
+	}
+	.points div {
+		display: flex;
+		flex-direction: column;
+		gap: 12px;
+	}
+	h3 {
+		font-size: 24px;
+		line-height: 30px;
+		font-weight: 500;
+		letter-spacing: -0.03em;
+	}
+	p {
+		color: var(--muted);
+		font-size: 16px;
+		line-height: 1.6;
+	}
+	@media (min-width: 810px) {
+		.note {
+			gap: 40px;
+			padding-bottom: 128px;
+		}
+		.note :global(img) {
+			aspect-ratio: 1.2;
+		}
+		h2 {
+			font-size: 44px;
+			line-height: 50px;
+		}
+	}
+	@media (min-width: 1200px) {
+		.note {
+			flex-direction: row;
+			align-items: flex-start;
+			gap: 64px;
+			padding-bottom: 160px;
+		}
+		.note.flip {
+			flex-direction: row-reverse;
+		}
+		.note > :global(img),
+		.text {
+			flex: 1 1 0;
+			min-width: 0;
+		}
+		.note :global(img) {
+			aspect-ratio: 1;
+		}
+	}
+</style>

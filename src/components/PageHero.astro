@@ -1,0 +1,69 @@
+---
+// Heading, lead and logo strip that open the marketing pages (About, Services).
+import Clients from './home/Clients.astro';
+
+const { leadWidth = 650 } = Astro.props;
+---
+
+<section class="hero container" style={`--lead-width: ${leadWidth}px`}>
+	<h2><slot name="title" /></h2>
+	<p class="lead"><slot /></p>
+</section>
+<div class="clients"><Clients title="Trusted by some of the biggest brands:" /></div>
+
+<style>
+	.hero {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: 24px;
+		padding-top: 40px;
+		padding-bottom: 56px;
+		text-align: center;
+	}
+	h2 {
+		text-wrap: balance;
+		max-width: 700px;
+		font-size: 44px;
+		line-height: 50px;
+		font-weight: 500;
+		letter-spacing: -0.04em;
+	}
+	.lead {
+		max-width: 620px;
+		color: var(--muted);
+		font-size: 16px;
+		line-height: 24px;
+	}
+	@media (min-width: 810px) {
+		.hero {
+			padding-top: 56px;
+			padding-bottom: 80px;
+		}
+		h2 {
+			font-size: 60px;
+			line-height: 69px;
+		}
+		.lead {
+			font-size: 18px;
+			line-height: 27px;
+		}
+	}
+	@media (min-width: 1200px) {
+		.clients {
+			padding-bottom: 64px;
+		}
+		.hero {
+			padding-top: 80px;
+			padding-bottom: 88px;
+		}
+		h2 {
+			max-width: 760px;
+			font-size: 72px;
+			line-height: 84px;
+		}
+		.lead {
+			max-width: var(--lead-width, 650px);
+		}
+	}
+</style>

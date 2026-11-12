@@ -1,0 +1,53 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import NoteSection from '../components/NoteSection.astro';
+import professional from '../assets/images/u0WiE1Xz4Aw4Nd5zAXfPjXBHgM.png';
+import personal from '../assets/images/MCaoCYTXBlN78PAd6F3A7VUqFI.png';
+
+const professionalPoints = [
+	{
+		title: "We're certified experts in what we do",
+		text: 'With years of experience, our team at Conversion is made up of certified professionals in digital marketing and web design. We stay up-to-date on the latest trends and best practices to ensure our clients get the most cutting-edge solutions.',
+	},
+	{
+		title: 'Quality is our priority',
+		text: 'We pride ourselves on delivering nothing short of excellence. Every project we take on is handled with meticulous attention to detail to ensure it not only looks great but performs exceptionally.',
+	},
+	{
+		title: "We're results-driven",
+		text: 'At Conversion, everything we do is focused on one thing—delivering measurable results. We create custom strategies designed to help our clients grow their business and achieve their goals.',
+	},
+];
+const personalPoints = [
+	{
+		title: "We're always laughing",
+		text: 'Our office is filled with laughter—whether we’re cracking jokes during a brainstorming session or sharing funny stories from our weekends. We believe that having fun is key to staying creative and energized.',
+	},
+	{
+		title: "We're a supportive bunch",
+		text: 'We’re more than just colleagues—we’re a team that looks out for one another. Whether someone needs help on a project or just a pep talk, we’ve got each other’s backs.',
+	},
+	{
+		title: 'We embrace quirkiness',
+		text: 'We love that each team member brings something unique to the table, whether it’s a quirky hobby or an unusual talent. It’s what makes our team dynamic and keeps things interesting!',
+	},
+];
+---
+
+<Base
+	title="About - Conversion"
+	description="Our team is all about results, but we never forget to bring our unique energy and personality to everything we do. We’re here to deliver impactful solutions while keeping things fun, creative, and true to who we are."
+	path="/about"
+>
+	<PageHero leadWidth={912}>
+		<Fragment slot="title">Driven by results, powered by <span class="serif">personality.</span></Fragment>
+		Our team is all about results, but we never forget to bring our unique energy and personality to everything we do. We’re here to deliver impactful solutions while keeping things fun, creative, and true to who we are.
+	</PageHero>
+	<NoteSection image={professional} alt="Three colleagues talking in a sunlit lounge" points={professionalPoints}>
+		On a <span class="serif">professional</span> note
+	</NoteSection>
+	<NoteSection image={personal} alt="A team around a table, laughing" points={personalPoints} flip>
+		On a <span class="serif">personal</span> note
+	</NoteSection>
+</Base>

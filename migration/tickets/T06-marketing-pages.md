@@ -1,5 +1,5 @@
 # T06 [template] About and Services
-Status: open
+Status: done
 Blocked by: T04
 
 Part of #1

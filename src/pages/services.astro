@@ -1,0 +1,71 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import ServiceBlock from '../components/ServiceBlock.astro';
+import meta from '../assets/images/34FMzBTqEHPQwNvmGpR76LnuEd4.png';
+import google from '../assets/images/EVLYs5po6qc394DmfKNKyf2rYt0.png';
+import tiktok from '../assets/images/VrXoqHxus2P9bnmgtJWBs2T4sGE.png';
+
+const services = [
+	{
+		title: 'Meta Ads',
+		text: 'Reach your ideal audience on Facebook and Instagram with our expertly managed Meta Ads campaigns. We focus on driving real results—whether it’s brand awareness, lead generation, or conversions—while optimizing your budget to get the most value from every dollar spent.',
+		items: [
+			'Comprehensive Audience Research & Targeting',
+			'Ad Creation and Copywriting',
+			'A/B Testing for Optimized Performance',
+			'Ongoing Campaign Management and Monitoring',
+			'Custom Budget Optimization Strategies',
+			'Detailed Analytics and Reporting',
+			'Retargeting Campaigns to Maximize Conversions',
+			'Continuous Ad Creative Updates Based on Performance',
+		],
+		image: meta,
+		price: 'Packages start at $4,999 per month, covering full Meta Ads management, including strategy, ad creation, and optimization. Flexible options and custom plans are available to fit your unique needs. Contact us today for more details.',
+	},
+	{
+		title: 'Google Ads',
+		text: 'Dominate search results with expertly managed Google Ads campaigns. We help you reach high-intent customers exactly when they’re searching for your services. Our data-driven approach ensures your ads drive conversions while maximizing your budget’s efficiency.',
+		items: [
+			'Comprehensive Keyword Research & Targeting',
+			'Custom Ad Copywriting and Design',
+			'A/B Testing for Maximum Conversion',
+			'Campaign Setup and Strategy Development',
+			'Ongoing Campaign Monitoring and Management',
+			'Budget Optimization to Maximize ROI',
+			'Detailed Performance Reporting and Insights',
+			'Retargeting Campaigns to Recapture Lost Leads',
+		],
+		image: google,
+		price: 'Packages start at $6,999 per month, providing complete Google Ads management, including strategy development, ad creation, and ongoing optimization. Flexible payment options and customized plans are available to suit your business needs.',
+	},
+	{
+		title: 'TikTok Ads',
+		text: 'Tap into the power of TikTok with creative ad campaigns that engage your audience. We help you craft viral-worthy ads that capture attention and drive action. Our team ensures every campaign is optimized for performance and designed to grow your brand on this fast-growing platform.',
+		items: [
+			'Target Audience Research & Precision Targeting',
+			'Ad Creation with Engaging, Trend-Driven Content',
+			'A/B Testing for Optimal Performance',
+			'Full Campaign Management and Monitoring',
+			'Budget Optimization for Maximum Impact',
+			'Performance Analytics and Reporting',
+			'Retargeting Strategies to Recapture Engaged Users',
+			'Influencer Collaboration Strategy (Optional)',
+		],
+		image: tiktok,
+		price: 'Packages start at $3,999 per month, offering complete TikTok Ads management, from strategy and content creation to ongoing optimization. Customizable plans and flexible options are available to fit your goals and budget.',
+	},
+];
+---
+
+<Base
+	title="Services - Conversion"
+	description="Boost your brand’s visibility and drive targeted results with expertly crafted Meta, Google, and TikTok ad campaigns designed to grow your business."
+	path="/services"
+>
+	<PageHero>
+		<Fragment slot="title">Paid advertising that delivers <span class="serif">results.</span></Fragment>
+		Boost your brand’s visibility and drive targeted results with expertly crafted Meta, Google, and TikTok ad campaigns designed to grow your business.
+	</PageHero>
+	{services.map((s, i) => <ServiceBlock {...s} flip={i % 2 === 1} />)}
+</Base>
