@@ -9,3 +9,7 @@ test('/coming-soon always goes to / and no file is fine', () => {
 	expect(allRedirects(undefined)).toEqual({ '/coming-soon': '/' });
 	expect(allRedirects('/coming-soon,/x')['/coming-soon']).toBe('/');
 });
+
+test('puts the base before a site path target, not before an absolute URL', () => {
+	expect(allRedirects('/a,https://x.test/b', '/demo/')).toEqual({ '/a': 'https://x.test/b', '/coming-soon': '/demo/' });
+});

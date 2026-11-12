@@ -1,4 +1,5 @@
 ---
+import { withBase } from '../lib/url';
 import { Image } from 'astro:assets';
 import type { CollectionEntry } from 'astro:content';
 
@@ -9,7 +10,7 @@ const { post } = Astro.props;
 const { title, category, image, imageAlt } = post.data;
 ---
 
-<a class="card" href={`/blog/${post.id}`}>
+<a class="card" href={withBase(`/blog/${post.id}`)}>
 	<Image src={image} alt={imageAlt ?? ''} widths={[357, 520, 1040]} sizes="(min-width: 1200px) 520px, (min-width: 810px) 357px, 342px" />
 	<h3>{title}</h3>
 	<p>{category}</p>

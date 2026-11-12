@@ -1,4 +1,5 @@
 ---
+import { absoluteUrl, withBase } from '../lib/url';
 import '../styles/global.css';
 import Nav from '../components/Nav.astro';
 import CtaBand from '../components/CtaBand.astro';
@@ -18,7 +19,7 @@ interface Props {
 }
 const { title, description, path, image = defaultImage, cta = true } = Astro.props;
 // The address of the site is one setting: SITE_URL (astro.config.mjs).
-const canonical = new URL(path, Astro.site).href;
+const canonical = absoluteUrl(path, Astro.site!);
 const imageUrl = new URL(image.src, Astro.site).href;
 ---
 
@@ -29,7 +30,7 @@ const imageUrl = new URL(image.src, Astro.site).href;
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<meta name="generator" content={Astro.generator} />
 		<link rel="icon" type="image/png" href={favicon.src} />
-		<link rel="preload" href="/fonts/satoshi-500.woff2" as="font" type="font/woff2" crossorigin />
+		<link rel="preload" href={withBase('/fonts/satoshi-500.woff2')} as="font" type="font/woff2" crossorigin />
 		<title>{title}</title>
 		<meta name="description" content={description} />
 		<link rel="canonical" href={canonical} />

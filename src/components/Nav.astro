@@ -1,4 +1,5 @@
 ---
+import { withBase } from '../lib/url';
 import Logo from './Logo.astro';
 
 // Decision 1: /coming-soon is dropped (T10 redirects it), so it is not linked.
@@ -24,10 +25,10 @@ const mobile = [
 
 <header class="nav" data-nav>
 	<nav class="bar" aria-label="Main">
-		<a class="logo" href="/" aria-label="Conversion, home"><Logo /></a>
+		<a class="logo" href={withBase('/')} aria-label="Conversion, home"><Logo /></a>
 
 		<ul class="links">
-			{main.map((l) => <li><a class="link" href={l.href}>{l.label}</a></li>)}
+			{main.map((l) => <li><a class="link" href={withBase(l.href)}>{l.label}</a></li>)}
 			<li class="dropdown">
 				<button class="link" type="button" aria-haspopup="true">
 					Pages
@@ -36,10 +37,10 @@ const mobile = [
 					</svg>
 				</button>
 				<ul class="menu">
-					{pages.map((l) => <li><a class="link" href={l.href}>{l.label}</a></li>)}
+					{pages.map((l) => <li><a class="link" href={withBase(l.href)}>{l.label}</a></li>)}
 				</ul>
 			</li>
-			<li><a class="button book" href="/contact">Book a call</a></li>
+			<li><a class="button book" href={withBase('/contact')}>Book a call</a></li>
 		</ul>
 
 		<button class="burger" type="button" aria-expanded="false" aria-controls="mobile-menu" aria-label="Menu">
@@ -49,9 +50,9 @@ const mobile = [
 
 	<div class="panel" id="mobile-menu">
 		<ul>
-			{mobile.map((l) => <li><a href={l.href}>{l.label}</a></li>)}
+			{mobile.map((l) => <li><a href={withBase(l.href)}>{l.label}</a></li>)}
 		</ul>
-		<a class="button" href="/contact">Book a call</a>
+		<a class="button" href={withBase('/contact')}>Book a call</a>
 	</div>
 </header>
 

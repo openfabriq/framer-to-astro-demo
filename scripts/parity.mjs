@@ -14,9 +14,12 @@ import { diffLists, heightGap, linksOf, parityFiles, parseHead, pickPages, textL
 
 const OLD = (process.env.LEGACY_SITE_URL ?? 'https://conversion.framer.media').replace(/\/$/, '');
 const PORT = 4322;
-const NEW = `http://localhost:${PORT}`;
 const SITE = (process.env.SITE_URL ?? OLD).replace(/\/$/, '');
-const origins = [OLD, NEW, SITE];
+// The built site lives under SITE_URL's path (GitHub Pages: /repo); the old site and the page paths do not.
+const BASE = new URL(SITE).pathname.replace(/\/$/, '');
+const NEW = `http://localhost:${PORT}${BASE}`;
+const origins = [OLD, NEW, SITE, `http://localhost:${PORT}`, new URL(SITE).origin];
+const unbase = (l) => (BASE && (l === BASE || l.startsWith(`${BASE}/`) || l.startsWith(`${BASE}#`)) ? l.slice(BASE.length).replace(/^(?!\/)/, '/') : l);
 const WIDTHS = [1200, 810, 390];
 const REPORT = 'parity-report';
 
@@ -156,7 +159,7 @@ for (const page of pages) {
 
 	const ignoreLinks = page.ignoreLinks ?? [];
 	const oldLinks = linksOf(oldHtml, OLD + page.path, origins).filter((l) => !ignoreLinks.includes(l));
-	const newLinks = linksOf(newHtml, NEW + page.path, origins).filter((l) => !ignoreLinks.includes(l));
+	const newLinks = linksOf(newHtml, NEW + page.path, origins).map(unbase).filter((l) => !ignoreLinks.includes(l));
 	const links = diffLists(oldLinks, newLinks);
 	check(page, 'links', links.missing.length === 0 && links.extra.length === 0, `missing ${show(links.missing)}; extra ${show(links.extra)}`);
 
