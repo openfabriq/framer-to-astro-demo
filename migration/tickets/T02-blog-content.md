@@ -1,5 +1,5 @@
 # T02 [content-type] Blog collection and its 4 posts
-Status: open
+Status: done
 Blocked by: T01
 
 Part of #1
