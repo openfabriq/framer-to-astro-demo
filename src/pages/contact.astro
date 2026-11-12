@@ -11,6 +11,7 @@ import { contactFields } from '../lib/forms';
 	cta={false}
 >
 	<section class="contact container">
+		<div class="top-glow" aria-hidden="true"></div>
 		<div class="intro">
 			<p class="title">Get in <span class="serif">touch.</span></p>
 			<p class="lead">
@@ -28,6 +29,7 @@ import { contactFields } from '../lib/forms';
 
 <style>
 	.contact {
+		position: relative;
 		display: flex;
 		flex-direction: column;
 		align-items: center;
@@ -64,9 +66,28 @@ import { contactFields } from '../lib/forms';
 			line-height: 27px;
 		}
 	}
+	/* Desktop only: on phone Framer's page has no glow at the top. */
+	.top-glow {
+		display: none;
+	}
 	@media (min-width: 1200px) {
+		.top-glow {
+			display: block;
+			position: absolute;
+			top: -120px;
+			left: 50%;
+			width: min(900px, 100%);
+			height: 420px;
+			translate: -50% 0;
+			background:
+				radial-gradient(ellipse 28% 20% at 50% 30%, rgb(255 170 90 / 0.75), transparent 70%),
+				radial-gradient(ellipse 22% 16% at 66% 26%, rgb(200 40 70 / 0.45), transparent 70%);
+			filter: blur(20px);
+			pointer-events: none;
+			z-index: -1;
+		}
 		.contact {
-			padding-top: 96px;
+			padding-top: 51px;
 		}
 		.title {
 			font-size: 80px;

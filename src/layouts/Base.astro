@@ -50,6 +50,6 @@ const imageUrl = new URL(image.src, Astro.site).href;
 			<slot />
 		</main>
 		{cta && <CtaBand />}
-		<Footer />
+		<Footer glow={cta} />
 	</body>
 </html>

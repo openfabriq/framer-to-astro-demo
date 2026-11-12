@@ -6,6 +6,11 @@ import { Image } from 'astro:assets';
 
 // The old footer's links all pointed at home anchors; they point at the pages now.
 // /coming-soon is dropped (decision 1).
+interface Props {
+	/** The glow sits on the "Ready to scale" band; pages without the band have none. */
+	glow?: boolean;
+}
+const { glow = true } = Astro.props;
 const pages = [
 	{ href: '/about', label: 'About' },
 	{ href: '/blog', label: 'Blog' },
@@ -20,7 +25,7 @@ const info = [
 ---
 
 <footer class="footer">
-	<div class="glow" aria-hidden="true"></div>
+	{glow && <div class="glow" aria-hidden="true"></div>}
 	<div class="main">
 		<div class="brand">
 			<a class="mark" href="/" aria-label="Conversion, home">
