@@ -1,5 +1,5 @@
 # T07 [template] Contact and Legal pages
-Status: open
+Status: done
 Blocked by: T03
 
 Part of #1
