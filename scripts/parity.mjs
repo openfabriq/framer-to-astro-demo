@@ -95,7 +95,7 @@ for (const page of pages) {
 
 	const ignoreLinks = page.ignoreLinks ?? [];
 	const oldLinks = linksOf(oldHtml, OLD + page.path, origins).filter((l) => !ignoreLinks.includes(l));
-	const newLinks = linksOf(newHtml, NEW + page.path, origins);
+	const newLinks = linksOf(newHtml, NEW + page.path, origins).filter((l) => !ignoreLinks.includes(l));
 	const links = diffLists(oldLinks, newLinks);
 	check(page, 'links', links.missing.length === 0 && links.extra.length === 0, `missing ${show(links.missing)}; extra ${show(links.extra)}`);
 

@@ -1,0 +1,295 @@
+---
+import { getCollection, render } from 'astro:content';
+import { Image } from 'astro:assets';
+import Base from '../../layouts/Base.astro';
+
+export async function getStaticPaths() {
+	const posts = await getCollection('blog');
+	return posts.map((post) => ({ params: { slug: post.id }, props: { post } }));
+}
+
+const { post } = Astro.props;
+const { title, description, category, author, authorImage, authorImageAlt, readTime, image, imageAlt, intro } = post.data;
+const { Content, headings } = await render(post);
+// "In this post": the sections (h2) of the body, linked to their ids.
+const sections = headings.filter((h) => h.depth === 2);
+---
+
+<Base title={title} description={description} path={`/blog/${post.id}`} image={image}>
+	<div class="container layout">
+		<article>
+			<header>
+				<span class="pill">{category}</span>
+				<h1>{title}</h1>
+				<div class="byline">
+					<div class="author">
+						<span class="muted">Written by</span>
+						{authorImage && <Image src={authorImage} alt={authorImageAlt ?? ''} width={48} height={48} />}
+						<span>{author}</span>
+					</div>
+					<span class="pill">{readTime}</span>
+				</div>
+			</header>
+			<Image class="cover" src={image} alt={imageAlt ?? ''} widths={[342, 746, 1386]} sizes="(min-width: 1200px) 693px, 100vw" loading="eager" />
+			<div class="intro">
+				{intro.split('\n\n').map((p) => <p>{p}</p>)}
+			</div>
+			{
+				sections.length > 0 && (
+					<nav class="toc" aria-label="In this post">
+						<p>In this post:</p>
+						<ul>
+							{sections.map((h) => (
+								<li>
+									<a href={`#${h.slug}`}>{h.text}</a>
+								</li>
+							))}
+						</ul>
+					</nav>
+				)
+			}
+			<div class="body">
+				<Content />
+			</div>
+		</article>
+		<aside>
+			<div class="side-cta">
+				<h2>Ready to scale your brand to <span class="serif">new heights?</span></h2>
+				<p>
+					If you want to achieve ground-breaking growth with increased sales and profitability with paid ads,
+					then you're in the right place.
+				</p>
+				<a class="button" href="https://cal.com" target="_blank" rel="noopener">Book a call</a>
+			</div>
+		</aside>
+	</div>
+</Base>
+
+<style>
+	.layout {
+		display: grid;
+		grid-template-columns: minmax(0, 1fr);
+		padding-top: 32px;
+	}
+	header {
+		display: flex;
+		flex-direction: column;
+		align-items: flex-start;
+		gap: 16px;
+	}
+	.pill {
+		padding: 8px 12px;
+		border: 1px solid var(--line);
+		border-radius: 999px;
+		background: rgb(255 255 255 / 0.06);
+		font-size: 14px;
+		line-height: 14px;
+		letter-spacing: -0.02em;
+	}
+	h1 {
+		font-size: 36px;
+		line-height: 46.8px;
+		letter-spacing: -0.04em;
+		font-weight: 500;
+	}
+	.byline {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		align-self: stretch;
+		margin-top: 2px;
+		font-size: 14px;
+		line-height: 21px;
+	}
+	.author {
+		display: flex;
+		align-items: center;
+		gap: 8px;
+	}
+	.author img {
+		width: 24px;
+		height: 24px;
+		border-radius: 50%;
+		object-fit: cover;
+	}
+	.muted {
+		color: var(--muted);
+	}
+	.cover {
+		display: block;
+		width: 100%;
+		aspect-ratio: 1.8;
+		height: auto;
+		object-fit: cover;
+		border-radius: 12px;
+		margin-top: 36px;
+	}
+	.intro {
+		display: flex;
+		flex-direction: column;
+		gap: 20px;
+		margin-top: 32px;
+		color: var(--muted);
+		font-size: 16px;
+		line-height: 24px;
+	}
+	.toc {
+		margin-top: 32px;
+		padding: 16px 16px 0;
+		border: 1px solid var(--line);
+		border-radius: 12px;
+		background: rgb(255 255 255 / 0.03);
+	}
+	.toc p {
+		font-size: 18px;
+		line-height: 23.4px;
+		margin-bottom: 16px;
+	}
+	.toc ul {
+		margin: 0;
+		padding: 0;
+		list-style: none;
+	}
+	.toc li {
+		padding: 15px 0 16px;
+		border-top: 1px solid var(--line);
+		font-size: 14px;
+		line-height: 21px;
+	}
+	.toc a {
+		display: block;
+	}
+	.toc a:hover {
+		color: var(--accent);
+	}
+	.body {
+		margin-top: 32px;
+		color: var(--muted);
+		font-size: 16px;
+		line-height: 24px;
+	}
+	.body :global(> * + *) {
+		margin-top: 24px;
+	}
+	.body :global(h2),
+	.body :global(h3) {
+		color: var(--text);
+		font-weight: 500;
+		scroll-margin-top: 112px;
+	}
+	.body :global(h2) {
+		margin-top: 48px;
+		font-size: 28px;
+		line-height: 36.4px;
+		letter-spacing: -0.02em;
+	}
+	.body :global(h3) {
+		margin-top: 48px;
+		font-size: 20px;
+		line-height: 26px;
+		letter-spacing: -0.02em;
+	}
+	.body :global(h2:first-child) {
+		margin-top: 0;
+	}
+	.body :global(a) {
+		color: var(--text);
+		text-decoration: underline;
+	}
+	.body :global(ul),
+	.body :global(ol) {
+		padding-left: 24px;
+	}
+	.body :global(strong) {
+		color: var(--text);
+		font-weight: 500;
+	}
+	aside {
+		display: none;
+	}
+	@media (min-width: 810px) {
+		.layout {
+			padding-top: 32px;
+		}
+		h1 {
+			font-size: 48px;
+			line-height: 62.4px;
+		}
+		.byline {
+			justify-content: space-between;
+		}
+		.toc {
+			padding-inline: 16px;
+		}
+		.toc li {
+			padding-inline: 0;
+		}
+		.body :global(h2) {
+			font-size: 36px;
+			line-height: 46.8px;
+			letter-spacing: -0.02em;
+		}
+		.body :global(h3) {
+			font-size: 28px;
+			line-height: 36.4px;
+		}
+	}
+	@media (min-width: 1200px) {
+		.layout {
+			grid-template-columns: minmax(0, 693px) 315px;
+			column-gap: 64px;
+			align-items: start;
+			justify-content: center;
+			padding-top: 48px;
+		}
+		.intro {
+			font-size: 18px;
+			line-height: 27px;
+		}
+		aside {
+			display: block;
+			position: sticky;
+			top: 112px;
+		}
+		.side-cta {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			text-align: center;
+			position: relative;
+			overflow: hidden;
+			isolation: isolate;
+			gap: 16px;
+			padding: 24px 24px 96px;
+			border: 1px solid var(--line);
+			border-radius: 16px;
+			background: var(--card);
+		}
+		.side-cta::after {
+			content: "";
+			position: absolute;
+			z-index: -1;
+			left: -20%;
+			right: -20%;
+			bottom: -90px;
+			height: 180px;
+			background:
+				radial-gradient(ellipse at 20% 100%, rgb(255 140 40 / 0.55), transparent 60%),
+				radial-gradient(ellipse at 50% 100%, rgb(255 60 60 / 0.5), transparent 60%),
+				radial-gradient(ellipse at 80% 100%, rgb(60 100 255 / 0.55), transparent 60%);
+			filter: blur(24px);
+			pointer-events: none;
+		}
+		.side-cta h2 {
+			font-size: 24px;
+			line-height: 28.8px;
+			font-weight: 500;
+			letter-spacing: -0.02em;
+		}
+		.side-cta p {
+			color: var(--muted);
+			font-size: 14px;
+			line-height: 21px;
+		}
+	}
+</style>

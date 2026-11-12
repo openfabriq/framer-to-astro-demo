@@ -1,0 +1,42 @@
+---
+import { Image } from 'astro:assets';
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+	post: CollectionEntry<'blog'>;
+}
+const { post } = Astro.props;
+const { title, category, image, imageAlt } = post.data;
+---
+
+<a class="card" href={`/blog/${post.id}`}>
+	<Image src={image} alt={imageAlt ?? ''} widths={[357, 520, 1040]} sizes="(min-width: 1200px) 520px, (min-width: 810px) 357px, 342px" />
+	<h3>{title}</h3>
+	<p>{category}</p>
+</a>
+
+<style>
+	.card {
+		display: block;
+	}
+	.card :global(img) {
+		display: block;
+		width: 100%;
+		aspect-ratio: 16 / 9;
+		height: auto;
+		object-fit: cover;
+		border-radius: 12px;
+		margin-bottom: 16px;
+	}
+	h3 {
+		font-size: 18px;
+		line-height: 27px;
+		font-weight: 500;
+		margin-bottom: 8px;
+	}
+	p {
+		color: var(--muted);
+		font-size: 16px;
+		line-height: 24px;
+	}
+</style>

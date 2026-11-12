@@ -1,0 +1,86 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import BlogCard from '../../components/BlogCard.astro';
+
+// Order of the old index (the Framer collection's order; the export has no date).
+const order = ['increase-leads', 'high-converting-pages', 'top-marketing-trends', 'why-you-need-a-blog'];
+const posts = (await getCollection('blog')).sort((a, b) => order.indexOf(a.id) - order.indexOf(b.id));
+---
+
+<Base
+	title="Blog - Conversion"
+	description="Get expert insights, practical tips, and strategies to grow your digital marketing agency tailored for ambitious agency owners like you."
+	path="/blog"
+>
+	<section class="container hero">
+		<h1>Welcome to the <span class="serif">blog.</span></h1>
+		<p>
+			Get expert insights, practical tips, and strategies to grow your digital marketing agency tailored for
+			ambitious agency owners like you.
+		</p>
+	</section>
+	<section class="container list">
+		{posts.map((post) => <BlogCard post={post} />)}
+	</section>
+</Base>
+
+<style>
+	.hero {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: 24px;
+		padding-top: 32px;
+		text-align: center;
+	}
+	h1 {
+		font-size: 38px;
+		line-height: 45.6px;
+		font-weight: 500;
+		letter-spacing: -0.04em;
+	}
+	.hero p {
+		max-width: 667px;
+		color: var(--muted);
+		font-size: 16px;
+		line-height: 24px;
+	}
+	.list {
+		display: grid;
+		grid-template-columns: 1fr;
+		gap: 32px;
+		padding-top: 64px;
+		padding-bottom: 32px;
+	}
+	@media (min-width: 810px) {
+		.hero {
+			padding-top: 48px;
+		}
+		h1 {
+			font-size: 60px;
+			line-height: 72px;
+		}
+		.hero p {
+			font-size: 18px;
+			line-height: 27px;
+		}
+		.list {
+			grid-template-columns: 1fr 1fr;
+		}
+	}
+	@media (min-width: 1200px) {
+		.hero {
+			padding-top: 80px;
+			gap: 20px;
+		}
+		h1 {
+			font-size: 80px;
+			line-height: 96px;
+		}
+		.hero p {
+			font-size: 20px;
+			line-height: 30px;
+		}
+	}
+</style>

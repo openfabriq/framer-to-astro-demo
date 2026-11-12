@@ -1,5 +1,5 @@
 # T08 [template] Blog index and blog post
-Status: open
+Status: done
 Blocked by: T02
 
 Part of #1
