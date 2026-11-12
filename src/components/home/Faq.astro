@@ -1,24 +1,25 @@
 ---
-// FAQ as native <details> (decision 3). The Framer page has no answer text for any question: an open
-// item shows no body, so none is invented here; it is flagged in the pull request.
-const questions = [
-	'How do you tailor Google Ads strategies for different businesses?',
-	"What's unique about your Meta Ads approach?",
-	'How do you ensure effective TikTok Ads targeting and engagement?',
-	'How do you choose ad formats and placements across platforms?',
-	'What reporting and analytics do you provide for ad campaign tracking?',
-	'Do you offer ongoing ad optimization and management services?',
+// FAQ as native <details> (decision 3). Answers are read from the published page, where Framer renders
+// them on click. One item open at a time, as on the old site (shared `name`).
+const items = [
+	['How do you tailor Google Ads strategies for different businesses?', 'We customize Google Ads strategies based on individual business goals and industry dynamics, ensuring optimal performance and ROI.'],
+	["What's unique about your Meta Ads approach?", 'Our Meta Ads strategies leverage platform-specific features to maximize reach and engagement, distinguishing brands in crowded social media spaces.'],
+	['How do you ensure effective TikTok Ads targeting and engagement?', 'Our TikTok Ads expertise combines precise targeting techniques with creative content strategies to captivate audiences and drive meaningful interactions.'],
+	['How do you choose ad formats and placements across platforms?', 'We analyze audience behavior and platform trends to select the most effective ad formats and placements for each campaign, optimizing visibility and conversion potential.'],
+	['What reporting and analytics do you provide for ad campaign tracking?', 'We offer comprehensive reporting and analytics, providing actionable insights into campaign performance across Google, Meta, and TikTok platforms.'],
+	['Do you offer ongoing ad optimization and management services?', 'Yes, we provide continuous ad optimization and management to stay ahead of evolving trends and algorithms, ensuring sustained campaign success on Google, Meta, and TikTok.'],
 ];
 ---
 
 <section class="faq" id="faq" aria-label="Frequently asked questions">
 	{
-		questions.map((q) => (
-			<details>
+		items.map(([q, a]) => (
+			<details name="faq">
 				<summary>
 					<span>{q}</span>
 					<i aria-hidden="true" />
 				</summary>
+				<p>{a}</p>
 			</details>
 		))
 	}
@@ -54,6 +55,13 @@ const questions = [
 	}
 	summary::-webkit-details-marker {
 		display: none;
+	}
+	p {
+		margin: 0;
+		padding: 0 20px 20px;
+		font-size: 16px;
+		line-height: 1.6;
+		color: rgba(255, 255, 255, 0.7);
 	}
 	i {
 		position: relative;
