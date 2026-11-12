@@ -71,9 +71,18 @@ const check = (page, what, ok, detail = '') => {
 };
 const show = (list) => list.map((x) => JSON.stringify(x)).join(', ');
 
+// The preview server closes idle connections while the browser works: retry once on a stale one.
+const getText = async (url) => {
+	try {
+		return await (await fetch(url)).text();
+	} catch {
+		return await (await fetch(url)).text();
+	}
+};
+
 for (const page of pages) {
 	const [oldHtml, newHtml] = await Promise.all(
-		[OLD, NEW].map((o) => fetch(o + page.path).then((r) => r.text())),
+		[OLD, NEW].map((o) => getText(o + page.path)),
 	);
 	const oldHead = parseHead(oldHtml);
 	const newHead = parseHead(newHtml);
@@ -86,7 +95,7 @@ for (const page of pages) {
 
 	const ignoreLinks = page.ignoreLinks ?? [];
 	const oldLinks = linksOf(oldHtml, OLD + page.path, origins).filter((l) => !ignoreLinks.includes(l));
-	const newLinks = linksOf(newHtml, NEW + page.path, origins);
+	const newLinks = linksOf(newHtml, NEW + page.path, origins).filter((l) => !ignoreLinks.includes(l));
 	const links = diffLists(oldLinks, newLinks);
 	check(page, 'links', links.missing.length === 0 && links.extra.length === 0, `missing ${show(links.missing)}; extra ${show(links.extra)}`);
 

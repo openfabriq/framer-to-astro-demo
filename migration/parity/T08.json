@@ -1,0 +1,82 @@
+{
+	"pages": [
+		{
+			"path": "/blog",
+			"ignoreLinks": [
+				"https://framer.link/hxmzaehsan",
+				"https://www.framer.com/",
+				"/coming-soon",
+				"/#results",
+				"/#services",
+				"/#comparison",
+				"/#about-us"
+			],
+			"ignoreText": [
+				"Made in Framer",
+				"Coming Soon",
+				"Create a free website with Framer, the website builder loved by startups, designers and agencies."
+			],
+			"ignoreTextBelow1200": [
+				"About Us",
+				"Process"
+			]
+		},
+		{
+			"path": "/blog/why-you-need-a-blog",
+			"ignoreLinks": [
+				"https://framer.link/hxmzaehsan",
+				"https://www.framer.com/",
+				"/coming-soon",
+				"/#results",
+				"/#services",
+				"/#comparison",
+				"/#about-us",
+				"/blog/why-you-need-a-blog#conclusion",
+				"/blog/why-you-need-a-blog#how-a-blog-can-help-your-clients-and-position-you-as-a-problem-solver",
+				"/blog/why-you-need-a-blog#how-to-start-your-agency-blog",
+				"/blog/why-you-need-a-blog#promoting-your-blog-to-drive-traffic",
+				"/blog/why-you-need-a-blog#the-benefits-of-blogging-for-lead-generation",
+				"/blog/why-you-need-a-blog#why-every-agency-needs-a-blog",
+				"/blog/why-you-need-a-blog#writing-posts-that-attract-and-convert"
+			],
+			"ignoreText": [
+				"Made in Framer",
+				"Coming Soon",
+				"Create a free website with Framer, the website builder loved by startups, designers and agencies."
+			],
+			"ignoreTextBelow1200": [
+				"About Us",
+				"Process"
+			],
+			"why": "The new \"In this post\" entries are anchors to the headings; the old ones are scroll buttons, not links."
+		},
+		{
+			"path": "/blog/increase-leads",
+			"ignoreLinks": [
+				"https://framer.link/hxmzaehsan",
+				"https://www.framer.com/",
+				"/coming-soon",
+				"/#results",
+				"/#services",
+				"/#comparison",
+				"/#about-us",
+				"/blog/increase-leads#conclusion",
+				"/blog/increase-leads#implement-an-email-nurturing-strategy",
+				"/blog/increase-leads#leverage-seo-to-drive-organic-traffic",
+				"/blog/increase-leads#optimize-your-website-for-conversions",
+				"/blog/increase-leads#use-targeted-content-marketing",
+				"/blog/increase-leads#utilize-social-media-ads"
+			],
+			"ignoreText": [
+				"Made in Framer",
+				"Coming Soon",
+				"Create a free website with Framer, the website builder loved by startups, designers and agencies."
+			],
+			"ignoreTextBelow1200": [
+				"About Us",
+				"Process"
+			],
+			"why": "The new \"In this post\" entries are anchors to the headings; the old ones are scroll buttons, not links."
+		}
+	]
+}
