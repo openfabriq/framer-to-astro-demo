@@ -1,0 +1,153 @@
+---
+import { Image } from 'astro:assets';
+import a1 from '../../assets/images/mEIBGBqwotHJ35YaPhM5ljuLc2U.png';
+import a2 from '../../assets/images/2B9gp2gJnBjBX44Yovd3HRxqiXM.png';
+import a3 from '../../assets/images/B9ROL6BhEMArgbWauFiEj7UZZJY.png';
+import a4 from '../../assets/images/lFzmQ3NzC3LG6q2c7lvBf8kw.png';
+import a5 from '../../assets/images/38I07rfLJ4DXJRQZ7YXCanY6ko.png';
+
+const avatars = [a1, a2, a3, a4, a5];
+---
+
+<section class="hero container">
+	<div class="proof">
+		<div class="avatars">
+			{avatars.map((a) => <Image src={a} alt="" width={36} height={36} />)}
+		</div>
+		<div class="rating">
+			<span class="stars" aria-hidden="true">
+				{
+					Array.from({ length: 5 }, () => (
+						<svg width="14" height="14" viewBox="0 0 14 14" fill="currentColor">
+							<path d="M7 .87 8.6 4.7l4.13.34-3.14 2.72.96 4.03L7 9.5l-3.55 2.29.96-4.03L1.27 5.04 5.4 4.7Z" />
+						</svg>
+					))
+				}
+			</span>
+			<span class="count">115+ happy clients</span>
+		</div>
+	</div>
+	<h1>Ready to <span class="serif">scale</span> your brand with paid ads?</h1>
+	<p class="lead">
+		If you want to achieve ground-breaking growth with increased sales and profitability with paid ads, then
+		you're in the right place.
+	</p>
+	<div class="buttons">
+		<a class="button large" href="https://cal.com" target="_blank" rel="noopener">Book a call</a>
+		<a class="button large secondary" href="/#clients">Learn More</a>
+	</div>
+	<div class="glow" aria-hidden="true"></div>
+</section>
+
+<style>
+	.hero {
+		position: relative;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		padding-top: 160px;
+		padding-bottom: 260px;
+		text-align: center;
+		overflow: hidden;
+	}
+	.proof {
+		display: flex;
+		align-items: center;
+		gap: 12px;
+		margin-bottom: 40px;
+	}
+	.avatars {
+		display: flex;
+	}
+	.avatars :global(img) {
+		width: 36px;
+		height: 36px;
+		margin-left: -12px;
+		border-radius: 50%;
+		object-fit: cover;
+	}
+	.avatars :global(img:first-child) {
+		margin-left: 0;
+	}
+	.rating {
+		display: flex;
+		flex-direction: column;
+		align-items: flex-start;
+		gap: 2px;
+	}
+	.stars {
+		display: flex;
+		gap: 1px;
+	}
+	.count {
+		color: var(--muted);
+		font-size: 16px;
+	}
+	h1 {
+		max-width: 740px;
+		font-size: 80px;
+		line-height: 1.15;
+		letter-spacing: -0.05em;
+		font-weight: 500;
+	}
+	h1 .serif {
+		letter-spacing: -0.03em;
+	}
+	.lead {
+		max-width: 600px;
+		margin-top: 24px;
+		color: var(--muted);
+		font-size: 18px;
+		line-height: 1.7;
+	}
+	.buttons {
+		display: flex;
+		gap: 24px;
+		margin-top: 32px;
+	}
+	.button.large {
+		padding: 12px 18px;
+		font-size: 16px;
+	}
+	.button.secondary {
+		background: #0d0d0d;
+		box-shadow: 0 0 0 1px var(--line);
+	}
+	.glow {
+		position: absolute;
+		left: 50%;
+		bottom: 40px;
+		width: 560px;
+		height: 160px;
+		translate: -50% 0;
+		border-radius: 50%;
+		background: radial-gradient(ellipse at 50% 70%, #f4c28a 0%, #ff4533 30%, #5a0a14 60%, transparent 75%);
+		filter: blur(40px);
+		opacity: 0.85;
+		pointer-events: none;
+	}
+	@media (max-width: 1199px) {
+		h1 {
+			font-size: 64px;
+		}
+	}
+	@media (max-width: 809px) {
+		.hero {
+			padding-top: 130px;
+			padding-bottom: 180px;
+		}
+		h1 {
+			font-size: 44px;
+		}
+		.lead {
+			font-size: 16px;
+		}
+		.buttons {
+			gap: 12px;
+		}
+		.glow {
+			width: 320px;
+			height: 110px;
+		}
+	}
+</style>

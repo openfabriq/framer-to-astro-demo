@@ -1,5 +1,5 @@
 # T04 [template] Home, first half: hero, clients, testimonials, results
-Status: open
+Status: done
 Blocked by: T01
 
 Part of #1
